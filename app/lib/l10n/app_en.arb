@@ -1,0 +1,28 @@
+{
+  "@@locale": "en",
+  "appTitle": "BeTheFifth",
+  "games": "Games",
+  "openGames": "Open Games",
+  "joinGame": "Join Game",
+  "createGame": "Create Game",
+  "players": "{count} players",
+  "@players": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profile": "Profile",
+  "login": "Log In",
+  "signInWithGoogle": "Sign in with Google",
+  "signInWithApple": "Sign in with Apple",
+  "noGamesFound": "No open games nearby",
+  "gameDetails": "Game Details",
+  "skill": "Skill Level",
+  "venue": "Venue",
+  "time": "Time",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "save": "Save"
+}

@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>BeTheFifth — Pitch Deck</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<script src="deck-stage.js"></script>
+<style>
+  :root {
+    --ink: #0B0D0C;
+    --ink2: #16191A;
+    --paper: #F6F5F1;
+    --paper-2: #ECEAE2;
+    --chalk: #D9D6C8;
+    --muted: #6E7370;
+    --lime: oklch(0.88 0.22 125);
+    --coral: oklch(0.72 0.19 35);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #000; font-family: Inter, system-ui, sans-serif; color: var(--ink); }
+
+  deck-stage { --slide-width: 1920px; --slide-height: 1080px; }
+  section {
+    width: 1920px; height: 1080px; position: relative; overflow: hidden;
+    background: var(--paper); color: var(--ink); padding: 96px 128px;
+  }
+  section.dark { background: var(--ink); color: var(--paper); }
+  section.lime { background: var(--lime); color: var(--ink); }
+
+  /* ----- Shared chrome ----- */
+  .slide-head {
+    position: absolute; top: 64px; left: 128px; right: 128px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: JetBrains Mono, monospace; font-size: 24px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .dark .slide-head { color: rgba(255,255,255,0.5); }
+  .lime .slide-head { color: rgba(0,0,0,0.55); }
+  .slide-head .wm { font-family: Space Grotesk; font-weight: 700; font-size: 24px; letter-spacing: -0.035em; text-transform: lowercase; color: var(--ink); display: inline-flex; align-items: baseline; gap: 0.28em; }
+  .dark .slide-head .wm { color: var(--paper); }
+  .slide-head .wm .five { background: var(--lime); color: var(--ink); padding: 0 0.18em 0.04em; border-radius: 0.14em; transform: rotate(-3deg); }
+  .dark .slide-head .wm .five { background: var(--lime); color: var(--ink); }
+  .slide-head .num { letter-spacing: 0.1em; }
+
+  .slide-body { position: absolute; inset: 180px 128px 160px; display: flex; flex-direction: column; }
+  .kicker { font-family: JetBrains Mono; font-size: 24px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+  .dark .kicker { color: rgba(255,255,255,0.55); }
+  .lime .kicker { color: rgba(0,0,0,0.6); }
+
+  h1.big {
+    font-family: Space Grotesk; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9;
+    font-size: 200px; margin: 0;
+  }
+  h1.med {
+    font-family: Space Grotesk; font-weight: 700; letter-spacing: -0.035em; line-height: 0.95;
+    font-size: 140px; margin: 0;
+  }
+  h1.sm {
+    font-family: Space Grotesk; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+    font-size: 96px; margin: 0;
+  }
+  h1 .hl { background: var(--lime); color: var(--ink); padding: 0 0.1em 0.04em; border-radius: 0.1em; display: inline-block; transform: rotate(-2deg); }
+  h1 em { font-family: Instrument Serif; font-style: italic; font-weight: 400; }
+
+  .body-text { font-family: Space Grotesk; font-weight: 400; font-size: 44px; line-height: 1.3; letter-spacing: -0.015em; max-width: 1200px; }
+  .body-text em { font-family: Instrument Serif; font-style: italic; font-weight: 400; }
+
+  .footnote {
+    position: absolute; bottom: 56px; left: 128px; right: 128px;
+    display: flex; justify-content: space-between;
+    font-family: JetBrains Mono; font-size: 24px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  }
+  .dark .footnote { color: rgba(255,255,255,0.4); }
+  .lime .footnote { color: rgba(0,0,0,0.45); }
+
+  /* ----- Slide 1 — cover ----- */
+  .cover { display: flex; flex-direction: column; justify-content: space-between; }
+  .cover .wm-hero {
+    font-family: Space Grotesk; font-weight: 700; text-transform: lowercase; letter-spacing: -0.045em; line-height: 0.88;
+    font-size: 320px; color: var(--paper); display: flex; align-items: baseline; gap: 0.15em;
+  }
+  .cover .wm-hero .five { background: var(--lime); color: var(--ink); padding: 0 0.16em 0.05em; border-radius: 0.14em; transform: rotate(-3deg); display: inline-block; }
+  .cover .tagline { font-family: Space Grotesk; font-weight: 500; font-size: 56px; letter-spacing: -0.02em; color: rgba(255,255,255,0.7); margin-top: 32px; max-width: 1100px; line-height: 1.2; }
+  .cover .tagline em { font-family: Instrument Serif; font-style: italic; font-weight: 400; color: var(--lime); }
+  .cover .footnote { color: rgba(255,255,255,0.5); }
+
+  /* ----- Slide 2 — problem ----- */
+  .problem-lines { display: flex; flex-direction: column; gap: 8px; }
+  .problem-lines div { font-family: Space Grotesk; font-weight: 700; font-size: 140px; letter-spacing: -0.04em; line-height: 0.95; }
+  .problem-lines .strike { color: var(--muted); position: relative; display: inline-block; }
+  .problem-lines .strike::after { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 10px; background: var(--coral); transform: rotate(-1deg); }
+
+  /* ----- Slide 3 — stat ----- */
+  .stat-slide { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+  .stat-slide .giant { font-family: Space Grotesk; font-weight: 700; font-size: 280px; line-height: 0.9; letter-spacing: -0.06em; color: var(--ink); margin-top: 40px; }
+  .stat-slide .giant .pct { color: var(--coral); }
+  .stat-slide .stat-caption { font-family: Space Grotesk; font-weight: 500; font-size: 48px; letter-spacing: -0.015em; line-height: 1.2; margin-top: 40px; max-width: 1100px; color: var(--ink); }
+
+  /* ----- Slide 4 — solution ----- */
+  .sol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; height: 100%; padding-bottom: 20px; }
+  .sol-grid h1.med { font-size: 110px; }
+  .sol-grid .side-text { font-family: Space Grotesk; font-weight: 400; font-size: 32px; line-height: 1.35; letter-spacing: -0.01em; color: rgba(255,255,255,0.75); margin-top: 36px; max-width: 640px; }
+  .sol-grid .phone-wrap { display: flex; justify-content: center; align-items: center; }
+  .phone { width: 360px; height: 720px; background: var(--ink2); border-radius: 48px; padding: 12px; box-shadow: 0 60px 120px -40px rgba(0,0,0,0.6); position: relative; border: 1px solid rgba(255,255,255,0.05); }
+  .phone::before { content: ""; position: absolute; top: 34px; left: 50%; transform: translateX(-50%); width: 140px; height: 40px; background: #000; border-radius: 24px; z-index: 2; }
+  .pscreen { width: 100%; height: 100%; background: var(--paper); border-radius: 52px; overflow: hidden; display: flex; flex-direction: column; }
+  .pstat { display: flex; justify-content: space-between; padding: 22px 40px 0; font-family: Space Grotesk; font-weight: 600; font-size: 22px; }
+  .pbody { flex: 1; padding: 56px 28px 24px; }
+  .pgreet { font-family: JetBrains Mono; font-size: 16px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .phead { font-family: Space Grotesk; font-weight: 700; font-size: 54px; letter-spacing: -0.03em; margin: 8px 0 28px; line-height: 0.95; }
+  .phead .hl { background: var(--lime); color: var(--ink); padding: 0 10px 2px; border-radius: 8px; }
+  .pills { display: flex; gap: 8px; margin-bottom: 22px; }
+  .pill { font-family: JetBrains Mono; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 16px; border-radius: 100px; font-weight: 500; }
+  .pill.on { background: var(--ink); color: var(--paper); }
+  .pill.off { border: 1px solid rgba(0,0,0,0.15); color: var(--ink); }
+  .gcard { background: var(--paper); border: 1px solid rgba(0,0,0,0.08); border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+  .gcard.feat { background: var(--ink); color: var(--paper); }
+  .gtop { display: flex; justify-content: space-between; align-items: center; }
+  .gtime { font-family: Space Grotesk; font-weight: 700; font-size: 40px; letter-spacing: -0.02em; }
+  .gstat { font-family: JetBrains Mono; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 14px; border-radius: 100px; font-weight: 600; background: var(--lime); color: var(--ink); }
+  .gstat.open { background: transparent; border: 1.5px solid rgba(0,0,0,0.15); color: var(--muted); }
+  .gven { font-size: 22px; font-weight: 500; }
+  .gmeta { display: flex; justify-content: space-between; align-items: center; font-family: JetBrains Mono; font-size: 16px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .gcard.feat .gmeta { color: rgba(255,255,255,0.55); }
+  .rost { display: flex; gap: 4px; }
+  .rost i { width: 24px; height: 30px; border-radius: 5px; background: var(--chalk); }
+  .rost i.f { background: var(--ink); }
+  .gcard.feat .rost i { background: rgba(255,255,255,0.15); }
+  .gcard.feat .rost i.f { background: var(--paper); }
+  .rost i.you { background: var(--lime) !important; }
+
+  /* ----- Slide 5 — how ----- */
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 80px; }
+  .how-step { border-top: 3px solid var(--ink); padding-top: 40px; }
+  .dark .how-step { border-top-color: var(--lime); }
+  .how-step .n { font-family: Space Grotesk; font-weight: 700; font-size: 120px; letter-spacing: -0.05em; line-height: 1; color: var(--ink); margin-bottom: 40px; }
+  .dark .how-step .n { color: var(--lime); }
+  .how-step h3 { font-family: Space Grotesk; font-weight: 600; font-size: 56px; letter-spacing: -0.025em; line-height: 1; margin: 0 0 20px; }
+  .how-step p { font-family: Inter; font-size: 26px; line-height: 1.45; margin: 0; opacity: 0.7; }
+
+  /* ----- Slide 6 — market ----- */
+  .market-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 40px; }
+  .market-card { background: var(--paper-2); border-radius: 24px; padding: 44px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px; }
+  .market-card.ink { background: var(--ink); color: var(--paper); }
+  .market-card.lime { background: var(--lime); color: var(--ink); }
+  .market-card .size-label { font-family: JetBrains Mono; font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; }
+  .market-card .num { font-family: Space Grotesk; font-weight: 700; font-size: 96px; letter-spacing: -0.04em; line-height: 1; margin: 12px 0; }
+  .market-card .num .cur { font-size: 56px; vertical-align: top; font-weight: 500; }
+  .market-card .desc { font-family: Space Grotesk; font-weight: 500; font-size: 24px; letter-spacing: -0.01em; line-height: 1.3; }
+  .market-card .region { font-family: JetBrains Mono; font-size: 18px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.55; margin-top: 24px; }
+
+  /* ----- Slide 7 — competition ----- */
+  .comp-matrix { display: grid; grid-template-columns: 1.2fr repeat(4, 1fr); margin-top: 40px; border: 1px solid rgba(0,0,0,0.12); border-radius: 16px; overflow: hidden; }
+  .comp-matrix > div { padding: 18px 24px; font-family: Space Grotesk; font-size: 24px; letter-spacing: -0.01em; border-right: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; }
+  .comp-matrix > div:nth-child(5n) { border-right: 0; }
+  .comp-matrix .head { background: var(--ink); color: var(--paper); font-family: JetBrains Mono; font-size: 20px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; border-right-color: rgba(255,255,255,0.1); }
+  .comp-matrix .rowname { background: var(--paper-2); font-weight: 600; }
+  .comp-matrix .btf { background: var(--lime); font-weight: 700; }
+  .comp-matrix .check { justify-content: center; font-size: 44px; }
+  .comp-matrix .check.yes { color: var(--ink); }
+  .comp-matrix .check.no { color: rgba(0,0,0,0.2); }
+
+  /* ----- Slide 8 — business model ----- */
+  .biz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+  .biz-card { border-radius: 24px; padding: 40px 44px; display: flex; flex-direction: column; }
+  .biz-card.free { background: var(--paper-2); color: var(--ink); }
+  .biz-card.pro { background: var(--ink); color: var(--paper); position: relative; }
+  .biz-card.pro::after { content: "PHASE 2"; position: absolute; top: 40px; right: 40px; font-family: JetBrains Mono; font-size: 18px; letter-spacing: 0.2em; padding: 10px 18px; border-radius: 100px; background: var(--lime); color: var(--ink); font-weight: 700; }
+  .biz-card h4 { font-family: JetBrains Mono; font-size: 20px; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 12px; opacity: 0.6; font-weight: 500; }
+  .biz-card .price { font-family: Space Grotesk; font-weight: 700; font-size: 80px; letter-spacing: -0.04em; line-height: 1; margin: 0 0 8px; }
+  .biz-card .price .sm { font-size: 28px; font-weight: 500; opacity: 0.5; margin-left: 10px; }
+  .biz-card .tag { font-family: Space Grotesk; font-size: 22px; line-height: 1.3; letter-spacing: -0.01em; margin: 8px 0 16px; }
+  .biz-card ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(0,0,0,0.1); }
+  .biz-card.pro ul { border-top-color: rgba(255,255,255,0.12); }
+  .biz-card li { padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.08); font-family: Inter; font-size: 22px; display: flex; align-items: center; gap: 18px; }
+  .biz-card.pro li { border-bottom-color: rgba(255,255,255,0.08); }
+  .biz-card li::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--lime); flex-shrink: 0; }
+
+  /* ----- Slide 9 — roadmap ----- */
+  .road { margin-top: 80px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .road .milestone { position: relative; padding-top: 64px; }
+  .road .milestone::before {
+    content: ""; position: absolute; top: 16px; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.15);
+  }
+  .road .milestone.active::before { background: var(--lime); }
+  .road .milestone .dot {
+    position: absolute; top: 8px; left: 0; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--ink2); border: 3px solid rgba(255,255,255,0.15);
+  }
+  .road .milestone.active .dot { background: var(--lime); border-color: var(--lime); }
+  .road .milestone .period { font-family: JetBrains Mono; font-size: 20px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+  .road .milestone.active .period { color: var(--lime); }
+  .road .milestone h4 { font-family: Space Grotesk; font-weight: 700; font-size: 44px; letter-spacing: -0.025em; line-height: 1; margin: 0 0 20px; }
+  .road .milestone ul { list-style: none; padding: 0; margin: 0; }
+  .road .milestone li { font-family: Inter; font-size: 22px; line-height: 1.4; padding: 8px 0; color: rgba(255,255,255,0.7); }
+
+  /* ----- Slide 10 — founder ----- */
+  .founder { display: grid; grid-template-columns: 0.7fr 1fr; gap: 96px; align-items: center; height: 100%; }
+  .founder .avi-wrap {
+    width: 500px; height: 500px; border-radius: 50%; background: var(--lime);
+    display: flex; align-items: center; justify-content: center;
+    font-family: Space Grotesk; font-weight: 700; font-size: 360px; letter-spacing: -0.06em; color: var(--ink); line-height: 1;
+  }
+  .founder h2 { font-family: Space Grotesk; font-weight: 700; font-size: 96px; letter-spacing: -0.035em; line-height: 1; margin: 0 0 24px; }
+  .founder .who-meta { font-family: JetBrains Mono; font-size: 22px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 48px; }
+  .founder blockquote {
+    font-family: Space Grotesk; font-weight: 500; font-size: 40px; letter-spacing: -0.015em; line-height: 1.3;
+    margin: 0; max-width: 900px; text-wrap: pretty;
+  }
+  .founder blockquote em { font-family: Instrument Serif; font-style: italic; font-weight: 400; }
+
+  /* ----- Slide 11 — ask ----- */
+  .ask-slide { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+  .ask-slide h1.med { font-size: 160px; }
+  .ask-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 80px; width: 100%; }
+  .ask-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 48px; }
+  .ask-card .label { font-family: JetBrains Mono; font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+  .ask-card .num { font-family: Space Grotesk; font-weight: 700; font-size: 88px; letter-spacing: -0.03em; line-height: 1; margin-bottom: 16px; }
+  .ask-card .num.hl { color: var(--lime); }
+  .ask-card p { font-family: Inter; font-size: 22px; line-height: 1.45; color: rgba(255,255,255,0.7); margin: 0; }
+
+  /* ----- Slide 12 — outro ----- */
+  .outro { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; height: 100%; }
+  .outro h1 { font-family: Space Grotesk; font-weight: 700; font-size: 280px; letter-spacing: -0.045em; line-height: 0.88; margin: 0; }
+  .outro h1 .hl { background: var(--paper); color: var(--ink); padding: 0 0.08em; border-radius: 0.08em; display: inline-block; transform: rotate(-2deg); }
+  .outro .contact {
+    margin-top: 80px; display: flex; gap: 80px; font-family: JetBrains Mono; font-size: 24px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(0,0,0,0.7);
+  }
+  .outro .contact strong { display: block; font-family: Space Grotesk; font-size: 36px; letter-spacing: -0.015em; text-transform: none; color: var(--ink); font-weight: 600; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<script type="application/json" id="speaker-notes">
+[
+  "Hi — I'm Aonghus, and this is BeTheFifth. In the next few minutes I'll walk you through what we're building, why it matters, and where we're going.",
+  "Five-a-side football has a specific, familiar failure mode. The pitch is booked. Four mates are warmed up. One is missing. Match called off. It happens constantly — and the existing tools, mostly WhatsApp, don't solve it.",
+  "This is the number that got us started. Roughly one in three casual five-a-side matches in Dublin get cancelled or played short-sided because the organiser can't find the last player. That's the problem we're here to fix.",
+  "BeTheFifth is a two-sided marketplace. Organisers post a game in under 30 seconds. Solo players nearby see it, join in one tap. Waitlist auto-promotes if someone drops. The match actually happens.",
+  "Three taps to a full squad. Post the game, let players find you, everyone turns up. We handle reminders, waitlist, cancellations — the boring logistics that currently live in twelve WhatsApp messages.",
+  "The market is bigger than people think. Ireland alone has around 200,000 regular five-a-side players. Add the UK and EU and we're at 30M+. Our serviceable target is a meaningful slice of that — urban, mobile-first, weekly players.",
+  "Nothing else does this. Facebook groups are chaos. Meetup is dead for sport. Local pitch apps only book the pitch — they don't fill it. We own the filling layer, and we're free, which no competitor is.",
+  "The business model is simple. Free forever for players and for posting games. Pro organisers — recurring games, in-app payments, private squads — pay €9 a month or 10% per booking. Phase 1 is free-only; Phase 2 unlocks Pro when organisers are asking for it.",
+  "Here's the roadmap. Q2 2026: Dublin launch, free tier, 500 organisers. Q4: Pro tier live. 2027: UK expansion starting with Manchester. 2028: continental Europe, Amsterdam and Berlin first.",
+  "I'm Aonghus, a solo founder in Dublin. Python backend, Flutter mobile — I can ship the full stack alone. I built this because I lived the problem every Tuesday night for three years. It's personal.",
+  "The ask: we're raising a small pre-seed to validate Dublin, hire one growth hire, and get to Pro tier. €250k gets us to 12 months of runway and measurable retention data.",
+  "Thank you. If this resonates, I'd love to talk. aonghus at bethefifth dot com — or just come to a game."
+]
+</script>
+
+<deck-stage>
+
+  <!-- 01 COVER -->
+  <section class="dark cover" data-screen-label="01 Cover">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">01 / 12</span>
+    </div>
+    <div style="margin-top: 160px;">
+      <div class="wm-hero">be the <span class="five">fifth</span></div>
+      <div class="tagline">Find a game. <em>Play tonight.</em></div>
+    </div>
+    <div class="footnote">
+      <span>Pitch deck · Apr 2026</span>
+      <span>Pre-seed round · Dublin</span>
+    </div>
+  </section>
+
+  <!-- 02 PROBLEM -->
+  <section data-screen-label="02 Problem">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">02 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="kicker">The problem</div>
+      <div class="problem-lines">
+        <div>Pitch booked.</div>
+        <div>Mates warming up.</div>
+        <div><span class="strike">One short.</span></div>
+      </div>
+      <div class="body-text" style="margin-top: 60px; max-width: 1400px; font-size: 36px;">
+        Every five-a-side organiser knows the feeling. The WhatsApp <em>"can anyone play tonight?"</em> that goes nowhere. The match called off at 6pm.
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 02 · Problem</span>
+      <span>bethefifth.com</span>
+    </div>
+  </section>
+
+  <!-- 03 STAT -->
+  <section class="lime stat-slide" data-screen-label="03 Stat">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five" style="background:var(--ink); color:var(--lime);">fifth</span></div>
+      <span class="num">03 / 12</span>
+    </div>
+    <div class="slide-body" style="justify-content: center; padding-top: 40px;">
+      <div class="kicker" style="color: rgba(0,0,0,0.6);">The stat that started it</div>
+      <div class="giant">1 in <span class="pct">3</span></div>
+      <div class="stat-caption" style="font-size: 40px; margin-top: 32px;">
+        casual five-a-side matches in Dublin get cancelled or played short because the organiser can't find the last player.
+      </div>
+    </div>
+    <div class="footnote">
+      <span>Source · 120 organiser survey · Dublin, Feb 2026</span>
+      <span>BeTheFifth · 03 · Stat</span>
+    </div>
+  </section>
+
+  <!-- 04 SOLUTION -->
+  <section class="dark" data-screen-label="04 Solution">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">04 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="sol-grid">
+        <div>
+          <div class="kicker">The solution</div>
+          <h1 class="med">A marketplace for the <span class="hl">fifth</span> player.</h1>
+          <div class="side-text">
+            Organisers post open games in 30 seconds. Solo players nearby see them, join in one tap. Waitlist auto-promotes if someone drops. The match actually happens.
+          </div>
+        </div>
+        <div class="phone-wrap">
+          <div class="phone"><div class="pscreen">
+            <div class="pstat"><span>19:30</span><span>●●●</span></div>
+            <div class="pbody">
+              <div class="pgreet">Tuesday · Clonskeagh</div>
+              <div class="phead">Tonight needs a <span class="hl">fifth.</span></div>
+              <div class="pills"><span class="pill on">Tonight</span><span class="pill off">Tomorrow</span><span class="pill off">Week</span></div>
+              <div class="gcard feat">
+                <div class="gtop"><span class="gtime">19:30</span><span class="gstat">1 SPOT</span></div>
+                <span class="gven">Astro Park · D8</span>
+                <div class="gmeta"><span>Casual</span><div class="rost"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="you"></i></div></div>
+              </div>
+              <div class="gcard">
+                <div class="gtop"><span class="gtime">20:30</span><span class="gstat open">3 SPOTS</span></div>
+                <span class="gven">Herbert Park</span>
+                <div class="gmeta"><span>Competitive</span><div class="rost"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></div></div>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 04 · Solution</span>
+      <span>Two-sided marketplace · Organisers + solo players</span>
+    </div>
+  </section>
+
+  <!-- 05 HOW -->
+  <section class="dark" data-screen-label="05 How">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">05 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="kicker">How it works</div>
+      <h1 class="med">Three taps.<br/>Your squad is <span class="hl">full.</span></h1>
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="n">01</div>
+          <h3>Post the game</h3>
+          <p>Venue, time, skill level, players needed. 30 seconds. No card required — posting is free forever.</p>
+        </div>
+        <div class="how-step">
+          <div class="n">02</div>
+          <h3>Players find you</h3>
+          <p>Solo players see your game by distance and kick-off. Request to join. You approve — or auto-fill.</p>
+        </div>
+        <div class="how-step">
+          <div class="n">03</div>
+          <h3>Everyone turns up</h3>
+          <p>Automatic reminders, waitlist promotes if someone drops. You stop chasing, the match happens.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 05 · How</span>
+      <span>Average fill time · 4.2 min</span>
+    </div>
+  </section>
+
+  <!-- 06 MARKET -->
+  <section data-screen-label="06 Market">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">06 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="kicker">Market</div>
+      <h1 class="med">30 million regular<br/>five-a-side players in <span class="hl">EU+UK.</span></h1>
+      <div class="market-grid">
+        <div class="market-card">
+          <div>
+            <div class="size-label">SOM · Beachhead</div>
+            <div class="num"><span class="cur">€</span>12M</div>
+          </div>
+          <div>
+            <div class="desc">Dublin &amp; greater region. 200k regular players. Pro tier ARR at year 2.</div>
+            <div class="region">IRELAND · 2026</div>
+          </div>
+        </div>
+        <div class="market-card ink">
+          <div>
+            <div class="size-label">SAM · Phase 2</div>
+            <div class="num"><span class="cur">€</span>180M</div>
+          </div>
+          <div>
+            <div class="desc">UK major cities + Amsterdam, Berlin. 8M players. Rollout 2027–28.</div>
+            <div class="region">UK &amp; EU · 2027+</div>
+          </div>
+        </div>
+        <div class="market-card lime">
+          <div>
+            <div class="size-label">TAM · Ceiling</div>
+            <div class="num"><span class="cur">€</span>1.4B</div>
+          </div>
+          <div>
+            <div class="desc">All of Europe. Expanding into 7-a-side &amp; pitch partnerships.</div>
+            <div class="region">EU · Long-term</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 06 · Market</span>
+      <span>Source · UEFA grassroots report 2024</span>
+    </div>
+  </section>
+
+  <!-- 07 COMPETITION -->
+  <section data-screen-label="07 Competition">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">07 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="kicker">Competition</div>
+      <h1 class="med">Nobody else<br/>fills the <span class="hl">squad.</span></h1>
+      <div class="comp-matrix">
+        <div class="head"></div>
+        <div class="head">WhatsApp</div>
+        <div class="head">Meetup</div>
+        <div class="head">Pitch booking apps</div>
+        <div class="head">BeTheFifth</div>
+
+        <div class="rowname">Find players</div>
+        <div class="check no">✕</div>
+        <div class="check no">✕</div>
+        <div class="check no">✕</div>
+        <div class="btf check yes">✓</div>
+
+        <div class="rowname">Waitlist + auto-fill</div>
+        <div class="check no">✕</div>
+        <div class="check no">✕</div>
+        <div class="check no">✕</div>
+        <div class="btf check yes">✓</div>
+
+        <div class="rowname">Free for organisers</div>
+        <div class="check yes">✓</div>
+        <div class="check no">✕</div>
+        <div class="check no">✕</div>
+        <div class="btf check yes">✓</div>
+
+        <div class="rowname">Recurring games</div>
+        <div class="check no">✕</div>
+        <div class="check yes">✓</div>
+        <div class="check no">✕</div>
+        <div class="btf check yes">✓</div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 07 · Competition</span>
+      <span>Differentiated on player-filling layer</span>
+    </div>
+  </section>
+
+  <!-- 08 BUSINESS MODEL -->
+  <section data-screen-label="08 Business">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">08 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="kicker">Business model</div>
+      <h1 class="med">Free scales.<br/>Pro <span class="hl">monetises.</span></h1>
+      <div class="biz-grid">
+        <div class="biz-card free">
+          <div>
+            <h4>Free tier</h4>
+            <div class="price">€0<span class="sm">/ forever</span></div>
+            <div class="tag">Every organiser, every player — no paywall on the core loop.</div>
+          </div>
+          <ul>
+            <li>Unlimited games posted</li>
+            <li>Roster &amp; waitlist management</li>
+            <li>Push reminders</li>
+            <li>Player profiles + reliability</li>
+          </ul>
+        </div>
+        <div class="biz-card pro">
+          <div>
+            <h4>Pro organiser</h4>
+            <div class="price">€9<span class="sm">/ month</span></div>
+            <div class="tag">Or 10% per booking — payment collection, private games, recurrence.</div>
+          </div>
+          <ul>
+            <li>Collect pitch fees at booking</li>
+            <li>Recurring games (weekly fixtures)</li>
+            <li>Private games with join codes</li>
+            <li>Priority listing in search</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 08 · Business</span>
+      <span>Target · 15% organiser conversion to Pro</span>
+    </div>
+  </section>
+
+  <!-- 09 ROADMAP -->
+  <section class="dark" data-screen-label="09 Roadmap">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">09 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="kicker">Roadmap</div>
+      <h1 class="med">Dublin first.<br/>Europe <span class="hl">next.</span></h1>
+      <div class="road">
+        <div class="milestone active">
+          <div class="dot"></div>
+          <div class="period">Q2 2026 · Now</div>
+          <h4>Dublin MVP</h4>
+          <ul>
+            <li>Free tier live</li>
+            <li>500 organisers</li>
+            <li>Venue directory</li>
+            <li>iOS + Android</li>
+          </ul>
+        </div>
+        <div class="milestone">
+          <div class="dot"></div>
+          <div class="period">Q4 2026</div>
+          <h4>Pro tier</h4>
+          <ul>
+            <li>Stripe Connect</li>
+            <li>Recurring games</li>
+            <li>Private squads</li>
+            <li>First revenue</li>
+          </ul>
+        </div>
+        <div class="milestone">
+          <div class="dot"></div>
+          <div class="period">2027</div>
+          <h4>UK expansion</h4>
+          <ul>
+            <li>Manchester launch</li>
+            <li>London launch</li>
+            <li>GBP pricing</li>
+            <li>2 growth hires</li>
+          </ul>
+        </div>
+        <div class="milestone">
+          <div class="dot"></div>
+          <div class="period">2028</div>
+          <h4>EU rollout</h4>
+          <ul>
+            <li>Amsterdam · Berlin</li>
+            <li>7-a-side support</li>
+            <li>Pitch partnerships</li>
+            <li>Series A</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 09 · Roadmap</span>
+      <span>24-month plan</span>
+    </div>
+  </section>
+
+  <!-- 10 FOUNDER -->
+  <section data-screen-label="10 Founder">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">10 / 12</span>
+    </div>
+    <div class="slide-body">
+      <div class="founder">
+        <div class="avi-wrap">A</div>
+        <div>
+          <div class="kicker" style="margin-bottom: 16px;">Founder</div>
+          <h2>Aonghus.</h2>
+          <div class="who-meta">Solo founder · Dublin · Python + Flutter</div>
+          <blockquote>
+            We kept calling off matches because we <em>couldn't find the fifth player.</em> Pitch booked, four of us warmed up, one no-show. So I built the thing I wish existed.
+          </blockquote>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 10 · Founder</span>
+      <span>Full-stack · ships weekly</span>
+    </div>
+  </section>
+
+  <!-- 11 ASK -->
+  <section class="dark ask-slide" data-screen-label="11 Ask">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five">fifth</span></div>
+      <span class="num">11 / 12</span>
+    </div>
+    <div class="slide-body" style="justify-content: center;">
+      <div class="kicker">The ask</div>
+      <h1 class="med">Raising <span class="hl">€250k.</span></h1>
+      <div class="ask-grid">
+        <div class="ask-card">
+          <div class="label">Runway</div>
+          <div class="num hl">12 mo</div>
+          <p>Through Pro tier launch and first 5,000 MAU milestone.</p>
+        </div>
+        <div class="ask-card">
+          <div class="label">Team</div>
+          <div class="num">+1</div>
+          <p>One growth hire — partnerships with venues, community onboarding.</p>
+        </div>
+        <div class="ask-card">
+          <div class="label">Milestones</div>
+          <div class="num">2026→27</div>
+          <p>Dublin retention data, Pro tier live, Manchester pilot opened.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 11 · Ask</span>
+      <span>SAFE · post-money</span>
+    </div>
+  </section>
+
+  <!-- 12 OUTRO -->
+  <section class="lime outro" data-screen-label="12 Outro">
+    <div class="slide-head">
+      <div class="wm">be the <span class="five" style="background:var(--ink); color:var(--lime);">fifth</span></div>
+      <span class="num">12 / 12</span>
+    </div>
+    <div class="slide-body" style="justify-content: center;">
+      <h1>Show up.<br/>Be the <span class="hl">fifth.</span></h1>
+      <div class="contact">
+        <div>EMAIL<strong>aonghus@bethefifth.com</strong></div>
+        <div>WEB<strong>bethefifth.com</strong></div>
+        <div>CITY<strong>Dublin, Ireland</strong></div>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>BeTheFifth · 12 · Thanks</span>
+      <span>Apr 2026 · Pre-seed</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+</body>
+</html>

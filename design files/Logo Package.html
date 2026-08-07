@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>BeTheFifth — Logo Package</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0B0D0C;
+    --paper: #F6F5F1;
+    --paper-2: #ECEAE2;
+    --lime: oklch(0.88 0.22 125);
+    --muted: #6e7370;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 72px 40px 120px; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--paper); border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 14px 40px; display: flex; gap: 22px; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .topbar .dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+  .topbar .spacer { flex: 1; }
+
+  header.h {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+    padding-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.12); margin-bottom: 72px;
+  }
+  header.h h1 {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(44px, 6vw, 80px);
+    line-height: 0.9; margin: 0; letter-spacing: -0.04em;
+  }
+  header.h .meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); text-align: right; }
+  header.h .meta strong { color: var(--ink); display: block; font-weight: 500; }
+
+  section { margin-bottom: 96px; }
+  .sec-head { display: flex; align-items: baseline; gap: 24px; margin-bottom: 32px; }
+  .sec-head h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.2em; margin: 0; }
+  .sec-head .idx { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 0.1em; }
+  .sec-head .rule { flex: 1; height: 1px; background: rgba(0,0,0,0.15); }
+
+  .lede { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 22px; line-height: 1.35; letter-spacing: -0.01em; max-width: 780px; margin-bottom: 40px; color: var(--ink); }
+
+  /* ----- Wordmark core ----- */
+  .wm {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; letter-spacing: -0.045em; line-height: 0.9;
+    text-transform: lowercase;
+    display: inline-flex; align-items: baseline; gap: 0.28em;
+  }
+  .wm .five {
+    display: inline-block;
+    background: var(--lime); color: var(--ink);
+    padding: 0 0.18em 0.04em;
+    border-radius: 0.14em;
+    transform: rotate(-3deg);
+  }
+  .wm.mono .five { background: var(--ink); color: var(--paper); }
+  .wm.mono-inv .five { background: var(--paper); color: var(--ink); }
+  .wm.inverted { color: var(--paper); }
+
+  /* ----- Hero stage ----- */
+  .hero {
+    background: var(--ink); color: var(--paper); border-radius: 20px; padding: 96px 72px;
+    display: flex; flex-direction: column; align-items: center; gap: 32px; position: relative; overflow: hidden;
+  }
+  .hero .wm { font-size: clamp(72px, 10vw, 140px); }
+  .hero .caption {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    display: flex; gap: 24px;
+  }
+  .hero .caption .tag { background: var(--lime); color: var(--ink); padding: 4px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 0.15em; }
+
+  /* ----- Variants grid ----- */
+  .vgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .vcard { border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+  .vcard .stage { min-height: 240px; display: flex; align-items: center; justify-content: center; padding: 48px; }
+  .vcard .stage.dark { background: var(--ink); }
+  .vcard .stage.paper { background: var(--paper); }
+  .vcard .stage.lime { background: var(--lime); }
+  .vcard .stage.paper2 { background: var(--paper-2); }
+  .vcard .meta {
+    padding: 14px 18px; display: flex; justify-content: space-between;
+    border-top: 1px solid rgba(0,0,0,0.08); background: var(--paper);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+  }
+  .vcard .meta strong { color: var(--ink); font-weight: 500; }
+  .vcard .wm { font-size: 56px; }
+
+  /* ----- Construction ----- */
+  .construction {
+    background: var(--paper-2); border-radius: 16px; padding: 64px;
+    position: relative; display: flex; justify-content: center; align-items: center;
+  }
+  .construction .wm-wrap { position: relative; display: inline-block; }
+  .construction .wm { font-size: 92px; position: relative; z-index: 2; }
+  /* Grid/guides */
+  .construction .guide {
+    position: absolute; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.2); z-index: 1;
+  }
+  .construction .guide-label {
+    position: absolute; right: -64px; font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; transform: translateY(-50%);
+  }
+  .construction .clearspace {
+    position: absolute; inset: -0.4em -0.4em; border: 1px dashed rgba(0,0,0,0.3);
+    border-radius: 0.1em; z-index: 1;
+  }
+  .construction .x-mark {
+    position: absolute; left: -48px; top: 50%; transform: translateY(-50%);
+    width: 32px; height: 32px; background: var(--lime); color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px;
+    display: flex; align-items: center; justify-content: center; border-radius: 6px;
+  }
+  .construction-legend {
+    margin-top: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; text-align: center;
+  }
+
+  /* ----- Sizing ----- */
+  .sizing { background: var(--paper); border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 48px; display: flex; flex-direction: column; gap: 32px; align-items: flex-start; }
+  .sizing .row { display: flex; align-items: baseline; gap: 32px; width: 100%; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .sizing .row:last-child { border-bottom: 0; padding-bottom: 0; }
+  .sizing .row .w { width: 140px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ----- Do / Don't ----- */
+  .do-dont { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .dd {
+    border-radius: 16px; overflow: hidden;
+    display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.08);
+  }
+  .dd .stage {
+    min-height: 180px; display: flex; align-items: center; justify-content: center; padding: 32px; background: var(--paper-2);
+    position: relative;
+  }
+  .dd.bad .stage::after {
+    content: ""; position: absolute; inset: 16px; border: 2px solid #D94A3D; border-radius: 8px;
+    background:
+      linear-gradient(45deg, transparent 48.5%, #D94A3D 49%, #D94A3D 51%, transparent 51.5%);
+    opacity: 0.35;
+  }
+  .dd .meta {
+    padding: 14px 18px; background: var(--paper);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .dd.good .meta .tag { background: var(--lime); color: var(--ink); padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+  .dd.bad .meta .tag { background: #F3E2DE; color: #8C2D20; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+  .dd .meta strong { color: var(--ink); font-weight: 500; }
+  .dd .wm { font-size: 32px; }
+  /* bad variants */
+  .wm.stretched { transform: scaleX(1.4); }
+  .wm.recolored .five { background: #ff00d4 !important; color: yellow !important; }
+  .wm.outlined { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+  .wm.outlined .five { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); transform: rotate(0); }
+  .wm.rotated { transform: rotate(-8deg); }
+
+  /* ----- Code blocks ----- */
+  .code {
+    background: var(--ink); color: var(--paper); border-radius: 16px; padding: 32px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto;
+  }
+  .code .c { color: rgba(255,255,255,0.4); }
+  .code .k { color: var(--lime); }
+
+  footer { padding: 48px 0 0; border-top: 1px solid rgba(0,0,0,0.1); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; display: flex; justify-content: space-between; }
+
+  @media (max-width: 900px) {
+    .vgrid, .do-dont { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="dot"></span>
+  <strong>BTF / LOGO PACKAGE v1.0</strong>
+  <span class="spacer"></span>
+  <span>Direction A · LOCKED</span>
+</div>
+
+<div class="wrap">
+
+  <header class="h">
+    <h1>The logo.</h1>
+    <div class="meta">
+      <strong>Direction A · Final</strong>
+      Wordmark + lime highlight<br/>
+      v1.0 · Apr 2026
+    </div>
+  </header>
+
+  <p class="lede">The primary mark is a lowercase wordmark in Space Grotesk 700, tracked tight. The word "fifth" sits in a lime tag, kicked up three degrees — a small, deliberate bit of swagger that reads as the late player arriving.</p>
+
+  <!-- ============ PRIMARY ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Primary lockup</h2>
+      <div class="rule"></div>
+      <span class="idx">01</span>
+    </div>
+
+    <div class="hero">
+      <div class="wm inverted">be the <span class="five">fifth</span></div>
+      <div class="caption">
+        <span class="tag">A / PRIMARY</span>
+        <span>Space Grotesk 700 · tracking −4.5%</span>
+        <span>rotation −3°</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VARIANTS ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Variants</h2>
+      <div class="rule"></div>
+      <span class="idx">02</span>
+    </div>
+
+    <p class="lede">Four surfaces the mark needs to survive on. Always use the color variant when lime is available. Fall back to mono only for single-color print, engraving, or embroidery under 12mm.</p>
+
+    <div class="vgrid">
+      <div class="vcard">
+        <div class="stage paper">
+          <div class="wm">be the <span class="five">fifth</span></div>
+        </div>
+        <div class="meta"><strong>A.1 — Light ground</strong><span>DEFAULT</span></div>
+      </div>
+
+      <div class="vcard">
+        <div class="stage dark">
+          <div class="wm inverted">be the <span class="five">fifth</span></div>
+        </div>
+        <div class="meta"><strong>A.2 — Dark ground</strong><span>APP · NIGHT</span></div>
+      </div>
+
+      <div class="vcard">
+        <div class="stage lime">
+          <div class="wm mono">be the <span class="five">fifth</span></div>
+        </div>
+        <div class="meta"><strong>A.3 — Lime ground</strong><span>CAMPAIGN</span></div>
+      </div>
+
+      <div class="vcard">
+        <div class="stage paper2">
+          <div class="wm mono">be the <span class="five">fifth</span></div>
+        </div>
+        <div class="meta"><strong>A.4 — Single-color mono</strong><span>PRINT · EMBOSS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONSTRUCTION ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Construction</h2>
+      <div class="rule"></div>
+      <span class="idx">03</span>
+    </div>
+
+    <p class="lede">Clear space equals the x-height of the wordmark on every side. The lime tag sits on the cap baseline and extends 0.18em of padding left and right. Rotation is locked at −3°.</p>
+
+    <div class="construction">
+      <div class="wm-wrap">
+        <div class="x-mark">x</div>
+        <div class="wm">be the <span class="five">fifth</span></div>
+        <div class="clearspace"></div>
+      </div>
+    </div>
+    <div class="construction-legend">Dashed box · minimum clear space · 1× x-height on all sides</div>
+  </section>
+
+  <!-- ============ SIZING ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Minimum sizes</h2>
+      <div class="rule"></div>
+      <span class="idx">04</span>
+    </div>
+
+    <div class="sizing">
+      <div class="row">
+        <span class="w">Print · 16mm</span>
+        <div class="wm" style="font-size: 18px;">be the <span class="five">fifth</span></div>
+      </div>
+      <div class="row">
+        <span class="w">UI · 24px</span>
+        <div class="wm" style="font-size: 24px;">be the <span class="five">fifth</span></div>
+      </div>
+      <div class="row">
+        <span class="w">Header · 40px</span>
+        <div class="wm" style="font-size: 40px;">be the <span class="five">fifth</span></div>
+      </div>
+      <div class="row">
+        <span class="w">Hero · 96px+</span>
+        <div class="wm" style="font-size: 96px;">be the <span class="five">fifth</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DO / DON'T ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Do not</h2>
+      <div class="rule"></div>
+      <span class="idx">05</span>
+    </div>
+
+    <div class="do-dont">
+      <div class="dd good">
+        <div class="stage"><div class="wm">be the <span class="five">fifth</span></div></div>
+        <div class="meta"><strong>Correct lockup</strong><span class="tag">DO</span></div>
+      </div>
+      <div class="dd bad">
+        <div class="stage"><div class="wm stretched">be the <span class="five">fifth</span></div></div>
+        <div class="meta"><strong>Don't stretch</strong><span class="tag">DON'T</span></div>
+      </div>
+      <div class="dd bad">
+        <div class="stage"><div class="wm recolored">be the <span class="five">fifth</span></div></div>
+        <div class="meta"><strong>Don't recolor</strong><span class="tag">DON'T</span></div>
+      </div>
+      <div class="dd bad">
+        <div class="stage"><div class="wm outlined">be the <span class="five">fifth</span></div></div>
+        <div class="meta"><strong>Don't outline</strong><span class="tag">DON'T</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SPECS ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Specs</h2>
+      <div class="rule"></div>
+      <span class="idx">06</span>
+    </div>
+
+    <div class="code">
+<span class="c">/* wordmark */</span>
+font-family: <span class="k">"Space Grotesk"</span>, sans-serif;
+font-weight: <span class="k">700</span>;
+text-transform: <span class="k">lowercase</span>;
+letter-spacing: <span class="k">-0.045em</span>;
+line-height: <span class="k">0.9</span>;
+
+<span class="c">/* the five tag */</span>
+background: <span class="k">oklch(0.88 0.22 125)</span>; <span class="c">/* #D5F24A — Pitch Lime */</span>
+color: <span class="k">#0B0D0C</span>; <span class="c">/* Match Night ink */</span>
+padding: <span class="k">0 0.18em 0.04em</span>;
+border-radius: <span class="k">0.14em</span>;
+transform: <span class="k">rotate(-3deg)</span>;
+
+<span class="c">/* clear space */</span>
+min-padding: <span class="k">1× x-height</span> on all sides;
+
+<span class="c">/* minimum size */</span>
+print: <span class="k">16mm</span> wide;
+screen: <span class="k">18px</span> font-size;
+    </div>
+  </section>
+
+  <footer>
+    <span>be the fifth · logo package · v1.0</span>
+    <span>Direction A · LOCKED</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

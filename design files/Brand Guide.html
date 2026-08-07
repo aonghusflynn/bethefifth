@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>BeTheFifth — Brand Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@400;600;800;900&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0B0D0C;
+    --ink-2: #16191A;
+    --paper: #F6F5F1;
+    --paper-2: #ECEAE2;
+    --line: #1f2320;
+    --muted: #6e7370;
+
+    /* Direction A — Pitch Lime */
+    --lime: oklch(0.88 0.22 125);
+    --lime-ink: #0B0D0C;
+
+    /* Direction B — Match Coral (hot, Strava-adjacent) */
+    --coral: oklch(0.72 0.19 35);
+
+    /* Direction C — Floodlight (electric blue) */
+    --floodlight: oklch(0.72 0.18 235);
+
+    /* Accent sky / terrace tones */
+    --cream: #F1EEDE;
+    --chalk: #D9D6C8;
+    --shadow: rgba(0,0,0,0.08);
+
+    --rad: 14px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 72px 40px 120px; }
+
+  /* ---------------- TOPBAR ---------------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--paper); border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 14px 40px; display: flex; gap: 22px; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .topbar .dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+  .topbar .spacer { flex: 1; }
+  .topbar a { color: var(--ink); text-decoration: none; opacity: 0.6; }
+  .topbar a:hover { opacity: 1; }
+
+  /* ---------------- HEADER ---------------- */
+  .brand-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.12); margin-bottom: 72px; }
+  .brand-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: clamp(48px, 7vw, 96px); line-height: 0.9;
+    margin: 0; letter-spacing: -0.04em;
+  }
+  .brand-header h1 em { font-style: normal; color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+  .brand-header .meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); text-align: right; }
+  .brand-header .meta strong { color: var(--ink); display: block; font-weight: 500; }
+
+  /* ---------------- SECTIONS ---------------- */
+  section { margin-bottom: 120px; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+  .sec-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.2em;
+    margin: 0;
+  }
+  .sec-head .idx { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 0.1em; }
+  .sec-head .rule { flex: 1; height: 1px; background: rgba(0,0,0,0.15); }
+
+  .lede { font-family: 'Space Grotesk', sans-serif; font-weight: 400; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; max-width: 780px; margin-bottom: 48px; }
+  .lede em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+
+  /* ---------------- STORY ---------------- */
+  .story-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start; }
+  .origin {
+    background: var(--ink); color: var(--paper); padding: 40px; border-radius: var(--rad);
+    font-family: 'Space Grotesk', sans-serif; font-size: 22px; line-height: 1.45; letter-spacing: -0.01em;
+    position: relative; overflow: hidden;
+  }
+  .origin::before { content: "“"; position: absolute; top: -20px; left: 16px; font-family: 'Instrument Serif', serif; font-size: 220px; line-height: 1; color: var(--lime); opacity: 0.9; }
+  .origin p { position: relative; margin: 60px 0 0; }
+  .origin .sig { display: block; margin-top: 28px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+  .principles { display: grid; gap: 18px; }
+  .principle { padding: 20px 0; border-top: 1px solid rgba(0,0,0,0.15); }
+  .principle:last-child { border-bottom: 1px solid rgba(0,0,0,0.15); }
+  .principle .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .principle h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 24px; margin: 4px 0 6px; letter-spacing: -0.015em; }
+  .principle p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink); opacity: 0.75; }
+
+  /* ---------------- LOGO EXPLORATION ---------------- */
+  .logo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .logo-card {
+    background: var(--paper); border: 1px solid rgba(0,0,0,0.08); border-radius: var(--rad);
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .logo-card .stage { aspect-ratio: 5/4; display: flex; align-items: center; justify-content: center; padding: 32px; position: relative; }
+  .logo-card .stage.dark { background: var(--ink); color: var(--paper); }
+  .logo-card .stage.lime { background: var(--lime); color: var(--ink); }
+  .logo-card .stage.coral { background: var(--coral); color: var(--paper); }
+  .logo-card .stage.floodlight { background: var(--floodlight); color: var(--paper); }
+  .logo-card .stage.paper { background: var(--paper-2); color: var(--ink); }
+  .logo-card .meta {
+    padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+  }
+  .logo-card .meta strong { color: var(--ink); font-weight: 500; }
+
+  /* ---------------- LOGO TYPE VARIANTS (SVG-free, CSS) ---------------- */
+  .wm {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; letter-spacing: -0.045em; line-height: 0.9;
+    font-size: 68px;
+  }
+  .wm.lowercase { text-transform: lowercase; }
+  .wm .five {
+    display: inline-block;
+    background: var(--lime); color: var(--ink);
+    padding: 0 10px 2px; border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+  .wm .five.coral { background: var(--coral); color: var(--paper); }
+  .wm .slash { color: var(--lime); }
+
+  .mono-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 160px; height: 160px; border-radius: 28px;
+    background: var(--ink); color: var(--lime);
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 108px;
+    letter-spacing: -0.06em;
+    position: relative;
+  }
+  .mono-mark.inverted { background: var(--lime); color: var(--ink); }
+  .mono-mark .circle {
+    position: absolute; right: 14px; bottom: 16px;
+    width: 18px; height: 18px; border-radius: 50%; background: currentColor;
+  }
+
+  .badge-mark {
+    width: 180px; height: 180px; border-radius: 50%;
+    border: 3px solid currentColor;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    position: relative;
+  }
+  .badge-mark .five { font-size: 88px; line-height: 1; letter-spacing: -0.06em; }
+  .badge-mark .label { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 10px; letter-spacing: 0.3em; margin-top: 4px; text-transform: uppercase; }
+  .badge-mark .tick { position: absolute; top: 20px; right: 24px; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+
+  .stack-mark { font-family: 'Space Grotesk', sans-serif; font-weight: 800; line-height: 0.82; letter-spacing: -0.06em; font-size: 68px; text-align: left; }
+  .stack-mark .accent { color: var(--lime); }
+  .stack-mark .small { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; display: block; margin-top: 10px; color: var(--muted); }
+
+  .roster-mark {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 44px; letter-spacing: -0.04em;
+    display: grid; grid-template-columns: repeat(5, 44px); gap: 8px; line-height: 1;
+  }
+  .roster-mark span {
+    width: 44px; height: 52px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55);
+  }
+  .roster-mark span.you { background: var(--lime); color: var(--ink); }
+
+  .slash-mark {
+    font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 92px; letter-spacing: -0.05em;
+    display: flex; align-items: baseline;
+  }
+  .slash-mark .dot-accent { color: var(--lime); }
+
+  /* ---------------- WORDMARK HERO ---------------- */
+  .wordmark-hero {
+    background: var(--ink); color: var(--paper); border-radius: 20px; padding: 80px 64px;
+    display: flex; flex-direction: column; gap: 36px; position: relative; overflow: hidden;
+  }
+  .wordmark-hero .giant {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.05em; line-height: 0.85;
+    font-size: clamp(72px, 12vw, 176px);
+  }
+  .wordmark-hero .giant .hl { background: var(--lime); color: var(--ink); padding: 0 16px 4px; border-radius: 14px; display: inline-block; transform: translateY(-8px); }
+  .wordmark-hero .foot {
+    display: flex; gap: 24px; align-items: center; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55);
+  }
+  .wordmark-hero .foot span.tag { background: var(--lime); color: var(--ink); padding: 4px 10px; border-radius: 20px; letter-spacing: 0.15em; font-weight: 600; }
+
+  /* ---------------- PALETTE ---------------- */
+  .palette { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 16px; }
+  .swatch {
+    border-radius: var(--rad); padding: 28px; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .swatch .name { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; text-transform: none; }
+  .swatch .role { opacity: 0.7; }
+  .swatch .codes { display: flex; flex-direction: column; gap: 4px; }
+  .s-ink { background: var(--ink); color: var(--paper); }
+  .s-paper { background: var(--paper-2); color: var(--ink); border: 1px solid rgba(0,0,0,0.08); }
+  .s-lime { background: var(--lime); color: var(--ink); }
+  .s-coral { background: var(--coral); color: var(--paper); }
+  .s-floodlight { background: var(--floodlight); color: var(--paper); }
+
+  .tone-strip { display: flex; height: 56px; border-radius: 10px; overflow: hidden; margin-top: 20px; border: 1px solid rgba(0,0,0,0.08); }
+  .tone-strip div { flex: 1; display: flex; align-items: flex-end; padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ink); opacity: 0.55; }
+
+  /* ---------------- TYPE ---------------- */
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .type-card { background: var(--paper-2); border-radius: var(--rad); padding: 36px; }
+  .type-card .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .type-card .family { font-size: 40px; margin: 0 0 4px; letter-spacing: -0.02em; font-weight: 600; }
+  .type-card .sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; font-family: 'JetBrains Mono', monospace; }
+  .type-card.display .family { font-family: 'Space Grotesk', sans-serif; }
+  .type-card.body .family { font-family: 'Inter', sans-serif; }
+  .type-card .spec { display: grid; grid-template-columns: 60px 1fr; row-gap: 14px; align-items: baseline; border-top: 1px solid rgba(0,0,0,0.12); padding-top: 20px; }
+  .type-card .spec .w { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .type-card .spec .s { letter-spacing: -0.01em; }
+  .type-card.display .spec .s { font-family: 'Space Grotesk', sans-serif; }
+  .type-card.body .spec .s { font-family: 'Inter', sans-serif; }
+
+  .scale { margin-top: 40px; background: var(--ink); color: var(--paper); border-radius: var(--rad); padding: 40px; }
+  .scale h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin: 0 0 24px; }
+  .scale .row { display: grid; grid-template-columns: 80px 100px 1fr; gap: 24px; padding: 14px 0; align-items: baseline; border-top: 1px solid rgba(255,255,255,0.08); }
+  .scale .row:first-of-type { border-top: 0; }
+  .scale .row .role { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; }
+  .scale .row .size { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); }
+  .scale .row .sample { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+
+  /* ---------------- VOICE ---------------- */
+  .voice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .voice-card { background: var(--paper-2); border-radius: var(--rad); padding: 32px; position: relative; overflow: hidden; }
+  .voice-card .mode { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .voice-card .line { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 34px; line-height: 1.1; letter-spacing: -0.025em; margin: 16px 0 20px; }
+  .voice-card .line em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+  .voice-card .line .hl { background: var(--lime); padding: 0 4px; }
+  .voice-card .note { font-size: 13px; line-height: 1.5; color: var(--muted); border-top: 1px solid rgba(0,0,0,0.1); padding-top: 14px; }
+
+  .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+  .do-dont > div { padding: 24px; border-radius: var(--rad); }
+  .do { background: var(--lime); }
+  .dont { background: #F3E2DE; }
+  .do h5, .dont h5 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin: 0 0 14px; }
+  .do ul, .dont ul { margin: 0; padding-left: 18px; font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 1.5; letter-spacing: -0.01em; }
+
+  /* ---------------- PRODUCT HERO (app mock) ---------------- */
+  .hero-stage {
+    background: linear-gradient(180deg, var(--paper-2), var(--paper));
+    border-radius: 20px; padding: 64px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .hero-stage h3 {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.035em; line-height: 0.95;
+    font-size: clamp(44px, 5vw, 72px); margin: 0 0 20px;
+  }
+  .hero-stage h3 .hl { background: var(--lime); padding: 0 10px 2px; border-radius: 10px; display: inline-block; transform: rotate(-1deg); }
+  .hero-stage p { font-size: 18px; line-height: 1.5; color: var(--ink); opacity: 0.75; max-width: 480px; }
+  .hero-stage .cta { margin-top: 28px; display: flex; gap: 12px; align-items: center; }
+  .hero-stage .btn-prim {
+    background: var(--ink); color: var(--paper); border: 0; padding: 16px 24px; border-radius: 100px;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: -0.01em;
+    display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+  }
+  .hero-stage .btn-prim .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); }
+  .hero-stage .btn-sec {
+    background: transparent; border: 1.5px solid var(--ink); padding: 14px 22px; border-radius: 100px;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 16px; color: var(--ink);
+  }
+  .hero-stage .meta-row {
+    margin-top: 40px; display: flex; gap: 32px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .hero-stage .meta-row strong { color: var(--ink); display: block; font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; text-transform: none; margin-bottom: 2px; }
+
+  /* Phone mock */
+  .phone {
+    width: 320px; height: 640px; background: var(--ink); border-radius: 44px; padding: 14px;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.05);
+    margin: 0 auto;
+  }
+  .phone-screen {
+    width: 100%; height: 100%; background: var(--paper); border-radius: 32px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .phone-status { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 12px; }
+  .phone-status .icons { display: flex; gap: 5px; align-items: center; }
+  .phone-status .icons i { display: inline-block; width: 14px; height: 8px; background: var(--ink); border-radius: 2px; }
+  .phone-body { flex: 1; padding: 20px 18px; overflow: hidden; }
+  .phone-body .greet { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+  .phone-body h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.025em; margin: 4px 0 16px; line-height: 1; }
+  .phone-body h4 .hl { background: var(--lime); padding: 0 4px; border-radius: 4px; }
+
+  .pill-row { display: flex; gap: 6px; margin-bottom: 16px; }
+  .pill-row .pill { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 100px; background: var(--ink); color: var(--paper); }
+  .pill-row .pill.out { background: transparent; color: var(--ink); border: 1px solid rgba(0,0,0,0.15); }
+
+  .game-card {
+    background: var(--paper); border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 14px;
+    display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;
+  }
+  .game-card .top { display: flex; justify-content: space-between; align-items: center; }
+  .game-card .time { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+  .game-card .status { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; border-radius: 100px; background: var(--lime); color: var(--ink); font-weight: 600; }
+  .game-card .venue { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink); font-weight: 500; }
+  .game-card .meta { display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+  .game-card .roster { display: flex; gap: 2px; }
+  .game-card .roster i { width: 16px; height: 20px; border-radius: 4px; background: var(--chalk); }
+  .game-card .roster i.filled { background: var(--ink); }
+  .game-card .roster i.you { background: var(--lime); }
+
+  .game-card.featured { background: var(--ink); color: var(--paper); }
+  .game-card.featured .venue { color: var(--paper); }
+  .game-card.featured .meta { color: rgba(255,255,255,0.5); }
+  .game-card.featured .roster i { background: rgba(255,255,255,0.15); }
+  .game-card.featured .roster i.filled { background: var(--paper); }
+
+  /* ---------------- APP ICON ---------------- */
+  .appicon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .appicon-tile { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .appicon {
+    width: 140px; height: 140px; border-radius: 32px; box-shadow: 0 12px 32px -8px rgba(0,0,0,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 98px; letter-spacing: -0.08em; line-height: 1;
+    position: relative; overflow: hidden;
+  }
+  .appicon .corner { position: absolute; bottom: 14px; right: 16px; width: 12px; height: 12px; border-radius: 50%; background: currentColor; }
+  .appicon.a { background: var(--lime); color: var(--ink); }
+  .appicon.b { background: var(--ink); color: var(--lime); }
+  .appicon.c { background: var(--coral); color: var(--paper); }
+  .appicon.d { background: linear-gradient(135deg, var(--lime) 50%, var(--ink) 50%); color: var(--ink); }
+  .appicon.d span.split { color: var(--paper); }
+  .appicon-tile .caption { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ---------------- SOCIAL ---------------- */
+  .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .social { border-radius: var(--rad); overflow: hidden; border: 1px solid rgba(0,0,0,0.08); }
+  .social .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding: 10px 14px; border-top: 1px solid rgba(0,0,0,0.08); background: var(--paper); }
+
+  .cover {
+    aspect-ratio: 3/1; background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 40px 56px; position: relative; overflow: hidden;
+  }
+  .cover .chant {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 56px; letter-spacing: -0.035em; line-height: 0.95;
+  }
+  .cover .chant .hl { background: var(--lime); color: var(--ink); padding: 0 8px; }
+  .cover .chant em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+  .cover .sig { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .cover .sig .mark { width: 56px; height: 56px; border-radius: 14px; background: var(--lime); color: var(--ink); display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: -0.05em; }
+
+  .avatars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 24px; background: var(--paper-2); align-items: center; justify-items: center; }
+  .avatar {
+    width: 96px; height: 96px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 60px; letter-spacing: -0.05em; line-height: 1;
+  }
+  .avatar.v1 { background: var(--lime); color: var(--ink); }
+  .avatar.v2 { background: var(--ink); color: var(--lime); }
+  .avatar.v3 { background: var(--coral); color: var(--paper); }
+  .avatar.v4 { background: var(--paper-2); color: var(--ink); border: 2px solid var(--ink); }
+
+  /* ---------------- FOOTER ---------------- */
+  footer { padding: 48px 0 0; border-top: 1px solid rgba(0,0,0,0.1); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; display: flex; justify-content: space-between; }
+
+  @media (max-width: 900px) {
+    .logo-grid, .voice-grid, .appicon-grid, .social-grid { grid-template-columns: 1fr 1fr; }
+    .palette { grid-template-columns: 1fr 1fr; }
+    .story-grid, .hero-stage, .type-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="dot"></span>
+  <strong>BTF / BRAND v0.1</strong>
+  <span class="spacer"></span>
+  <a href="#story">01 Story</a>
+  <a href="#logo">02 Mark</a>
+  <a href="#palette">03 Color</a>
+  <a href="#type">04 Type</a>
+  <a href="#voice">05 Voice</a>
+  <a href="#product">06 In Use</a>
+</div>
+
+<div class="wrap">
+
+  <header class="brand-header">
+    <h1>Be<em>The</em>Fifth.</h1>
+    <div class="meta">
+      <strong>Brand exploration</strong>
+      For Aonghus — Dublin<br/>
+      Round 01 · Apr 2026
+    </div>
+  </header>
+
+  <p class="lede">
+    A brand for the game that almost didn't happen. BeTheFifth is built around one small, specific feeling: <em>we're a player short</em> — and the tiny hero who fixes it.
+    Three directions below, sharing a spine: confident typography, one hot accent, zero noise.
+  </p>
+
+  <!-- ============= 01 STORY ============= -->
+  <section id="story">
+    <div class="sec-head">
+      <h2>Story &amp; principles</h2>
+      <div class="rule"></div>
+      <span class="idx">01 / 06</span>
+    </div>
+
+    <div class="story-grid">
+      <div class="origin">
+        <p>We're one short. Pitch booked, mates warming up, WhatsApp going nowhere. The fifth player is the difference between a match and a write-off. BeTheFifth is the platform for the person who shows up — and the organiser who stops begging.</p>
+        <span class="sig">— Origin note</span>
+      </div>
+
+      <div class="principles">
+        <div class="principle">
+          <span class="tag">01 · Principle</span>
+          <h3>Organiser first.</h3>
+          <p>Every decision answers one question: does this make it easier to fill the squad tonight?</p>
+        </div>
+        <div class="principle">
+          <span class="tag">02 · Principle</span>
+          <h3>Play, not product.</h3>
+          <p>We talk like mates in a group chat, not a SaaS changelog. Short sentences. Earned energy.</p>
+        </div>
+        <div class="principle">
+          <span class="tag">03 · Principle</span>
+          <h3>The fifth is the hero.</h3>
+          <p>The brand celebrates the late yes, the reliable player, the one who saves the match. Not the scoreline.</p>
+        </div>
+        <div class="principle">
+          <span class="tag">04 · Principle</span>
+          <h3>Local feel, global frame.</h3>
+          <p>Feels at home in Dublin, Manchester, Berlin. No shamrocks. The community is the color.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 02 LOGO ============= -->
+  <section id="logo">
+    <div class="sec-head">
+      <h2>Logo directions</h2>
+      <div class="rule"></div>
+      <span class="idx">02 / 06</span>
+    </div>
+
+    <p class="lede">Six explorations across three territories — wordmark, monogram, and badge. The name is set as one word, camel-cased. The number <em>5</em> carries the weight.</p>
+
+    <!-- Primary wordmark hero -->
+    <div class="wordmark-hero" style="margin-bottom: 32px;">
+      <div>
+        <div class="foot" style="margin-bottom: 20px;">
+          <span class="tag">PRIMARY</span>
+          <span>Wordmark · highlighted numeral</span>
+        </div>
+        <div class="giant">Be the<br/><span class="hl">Fifth.</span></div>
+      </div>
+      <div class="foot">
+        <span>space grotesk — 700</span>
+        <span>tracking −5%</span>
+        <span>one accent · lime</span>
+      </div>
+    </div>
+
+    <div class="logo-grid">
+      <!-- A -->
+      <div class="logo-card">
+        <div class="stage paper">
+          <div class="wm">be the <span class="five">fifth</span></div>
+        </div>
+        <div class="meta"><strong>A · Wordmark, lime lockup</strong><span>PRIMARY</span></div>
+      </div>
+      <!-- B -->
+      <div class="logo-card">
+        <div class="stage dark">
+          <div class="mono-mark">5<span class="circle"></span></div>
+        </div>
+        <div class="meta"><strong>B · "5" Monogram</strong><span>APP MARK</span></div>
+      </div>
+      <!-- C -->
+      <div class="logo-card">
+        <div class="stage lime">
+          <div class="badge-mark">
+            <div class="five">5</div>
+            <div class="label">Be the fifth · EST 2026</div>
+            <div class="tick"></div>
+          </div>
+        </div>
+        <div class="meta"><strong>C · Crest / badge</strong><span>MERCH · SOCIAL</span></div>
+      </div>
+      <!-- D -->
+      <div class="logo-card">
+        <div class="stage paper">
+          <div class="stack-mark">
+            BE THE<br/><span class="accent">FIFTH.</span>
+            <span class="small">Find a game · play tonight</span>
+          </div>
+        </div>
+        <div class="meta"><strong>D · Stack · editorial</strong><span>LONG-FORM</span></div>
+      </div>
+      <!-- E -->
+      <div class="logo-card">
+        <div class="stage dark">
+          <div class="roster-mark">
+            <span>1</span><span>2</span><span>3</span><span>4</span><span class="you">5</span>
+          </div>
+        </div>
+        <div class="meta"><strong>E · Roster concept</strong><span>ILLUSTRATIVE</span></div>
+      </div>
+      <!-- F -->
+      <div class="logo-card">
+        <div class="stage paper">
+          <div class="slash-mark">BE<span class="dot-accent">/</span>5<span class="dot-accent">.</span></div>
+        </div>
+        <div class="meta"><strong>F · Short lockup "BE/5"</strong><span>SECONDARY · UI</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 03 PALETTE ============= -->
+  <section id="palette">
+    <div class="sec-head">
+      <h2>Color system</h2>
+      <div class="rule"></div>
+      <span class="idx">03 / 06</span>
+    </div>
+
+    <p class="lede">One bold accent does the work. Pitch Lime signals <em>you're in the squad</em>. Ink and Paper carry everything else. Coral and Floodlight are reserve subs — used for alerts and secondary campaigns.</p>
+
+    <div class="palette">
+      <div class="swatch s-lime">
+        <div>
+          <div class="role">Primary accent</div>
+          <div class="name">Pitch Lime</div>
+        </div>
+        <div class="codes">
+          <span>oklch(0.88 0.22 125)</span>
+          <span>#D5F24A</span>
+          <span>Use · CTAs, highlights, "you"</span>
+        </div>
+      </div>
+      <div class="swatch s-ink">
+        <div>
+          <div class="role">Ink</div>
+          <div class="name">Match Night</div>
+        </div>
+        <div class="codes">
+          <span>#0B0D0C</span>
+          <span>90% body copy</span>
+        </div>
+      </div>
+      <div class="swatch s-paper">
+        <div>
+          <div class="role">Paper</div>
+          <div class="name">Chalk Line</div>
+        </div>
+        <div class="codes">
+          <span>#F6F5F1</span>
+          <span>Base surface</span>
+        </div>
+      </div>
+      <div class="swatch s-coral">
+        <div>
+          <div class="role">Secondary</div>
+          <div class="name">Stoppage</div>
+        </div>
+        <div class="codes">
+          <span>oklch(0.72 0.19 35)</span>
+          <span>Alerts · "one left"</span>
+        </div>
+      </div>
+      <div class="swatch s-floodlight">
+        <div>
+          <div class="role">Tertiary</div>
+          <div class="name">Floodlight</div>
+        </div>
+        <div class="codes">
+          <span>oklch(0.72 0.18 235)</span>
+          <span>Night mode · links</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tone-strip">
+      <div style="background:#0B0D0C; color:#fff;">INK 900</div>
+      <div style="background:#1f2320; color:#fff;">800</div>
+      <div style="background:#3d4240; color:#fff;">700</div>
+      <div style="background:#6e7370;">500</div>
+      <div style="background:#b6b9b4;">300</div>
+      <div style="background:#D9D6C8;">CHALK 200</div>
+      <div style="background:#ECEAE2;">100</div>
+      <div style="background:#F6F5F1;">PAPER 050</div>
+    </div>
+  </section>
+
+  <!-- ============= 04 TYPE ============= -->
+  <section id="type">
+    <div class="sec-head">
+      <h2>Typography</h2>
+      <div class="rule"></div>
+      <span class="idx">04 / 06</span>
+    </div>
+
+    <p class="lede">Two families. <em>Space Grotesk</em> brings the swagger — geometric, a little cheeky, built for tight headlines. <em>Inter</em> stays out of the way for app chrome and long copy. <em>JetBrains Mono</em> joins for timestamps, kick-off times, and scores.</p>
+
+    <div class="type-grid">
+      <div class="type-card display">
+        <div class="label">Display / Headlines</div>
+        <h2 class="family">Space Grotesk</h2>
+        <div class="sub">Google Fonts · Variable · 400–700</div>
+        <div class="spec">
+          <div class="w">500</div><div class="s" style="font-size: 32px; font-weight: 500;">Four in. One short.</div>
+          <div class="w">600</div><div class="s" style="font-size: 32px; font-weight: 600;">Four in. One short.</div>
+          <div class="w">700</div><div class="s" style="font-size: 32px; font-weight: 700; letter-spacing: -0.02em;">Four in. One short.</div>
+        </div>
+      </div>
+      <div class="type-card body">
+        <div class="label">Body / UI</div>
+        <h2 class="family">Inter</h2>
+        <div class="sub">Google Fonts · Variable · 400–700</div>
+        <div class="spec">
+          <div class="w">400</div><div class="s" style="font-size: 18px; font-weight: 400;">Kick-off 19:30 — Astro Park, Clonskeagh.</div>
+          <div class="w">500</div><div class="s" style="font-size: 18px; font-weight: 500;">Kick-off 19:30 — Astro Park, Clonskeagh.</div>
+          <div class="w">600</div><div class="s" style="font-size: 18px; font-weight: 600;">Kick-off 19:30 — Astro Park, Clonskeagh.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scale">
+      <h4>Type scale · 1920 / mobile equivalents shown</h4>
+      <div class="row"><span class="role">Display</span><span class="size">96 / −5%</span><span class="sample" style="font-size: 48px; font-weight:700;">We're one short.</span></div>
+      <div class="row"><span class="role">H1</span><span class="size">56 / −3%</span><span class="sample" style="font-size: 36px; font-weight:700;">Find a game near you</span></div>
+      <div class="row"><span class="role">H2</span><span class="size">32 / −2%</span><span class="sample" style="font-size: 26px; font-weight:600;">Tuesday night · 5-a-side</span></div>
+      <div class="row"><span class="role">Lede</span><span class="size">22 / 140</span><span class="sample" style="font-size: 20px; font-weight:400; font-family: Inter;">A free place to find players and fill your squad.</span></div>
+      <div class="row"><span class="role">Body</span><span class="size">16 / 150</span><span class="sample" style="font-size: 15px; font-weight:400; font-family: Inter;">Kick-off at 19:30. Astro Park, Clonskeagh. Four confirmed, one spot open.</span></div>
+      <div class="row"><span class="role">Mono</span><span class="size">12 / 100</span><span class="sample" style="font-family: 'JetBrains Mono'; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;">19:30 · 4/5 · €0 · ASTRO · DUB8</span></div>
+    </div>
+  </section>
+
+  <!-- ============= 05 VOICE ============= -->
+  <section id="voice">
+    <div class="sec-head">
+      <h2>Voice &amp; taglines</h2>
+      <div class="rule"></div>
+      <span class="idx">05 / 06</span>
+    </div>
+
+    <p class="lede">Three voice modes for three moments — the hook, the nudge, the welcome. All of them sound like someone you'd actually play with.</p>
+
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="mode">Mode A · Confident hook</div>
+        <div class="line">Find a game.<br/><span class="hl">Play tonight.</span></div>
+        <div class="note">Two beats. For landing pages, app store, hero. Works across EU markets.</div>
+      </div>
+      <div class="voice-card">
+        <div class="mode">Mode B · Cheeky nudge</div>
+        <div class="line">Four lads,<br/>one pitch, <em>one missing.</em></div>
+        <div class="note">For social, push notifications, referral. The organiser's voice.</div>
+      </div>
+      <div class="voice-card">
+        <div class="mode">Mode C · Welcome</div>
+        <div class="line">Show up.<br/>Be the <span class="hl">fifth</span>.</div>
+        <div class="note">For onboarding, thank-you states, post-match. The player's voice.</div>
+      </div>
+    </div>
+
+    <div class="do-dont">
+      <div class="do">
+        <h5>Do</h5>
+        <ul>
+          <li>Short sentences. Earned exclamations.</li>
+          <li>Name the feeling (pitch booked, one short).</li>
+          <li>Celebrate the late yes.</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <h5>Don't</h5>
+        <ul>
+          <li>Call users "athletes" or "warriors".</li>
+          <li>Say "platform", "ecosystem", "community-driven".</li>
+          <li>Use emoji. The type does the work.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= 06 IN USE ============= -->
+  <section id="product">
+    <div class="sec-head">
+      <h2>In use</h2>
+      <div class="rule"></div>
+      <span class="idx">06 / 06</span>
+    </div>
+
+    <p class="lede">Landing hero, app home, app icon, social covers. The mark earns its keep at every size.</p>
+
+    <!-- Landing hero -->
+    <div class="hero-stage">
+      <div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:20px;">01 · Marketing site hero</div>
+        <h3>Four lads,<br/>one pitch, <span class="hl">one missing.</span></h3>
+        <p>BeTheFifth finds the last player so your match actually happens. Free to post, free to join. Dublin now — everywhere next.</p>
+        <div class="cta">
+          <button class="btn-prim"><span class="dot"></span> Find a game</button>
+          <button class="btn-sec">I'm organising</button>
+        </div>
+        <div class="meta-row">
+          <div><strong>214</strong>GAMES THIS WEEK</div>
+          <div><strong>4.2min</strong>AVG FILL TIME</div>
+          <div><strong>Dublin</strong>LIVE NOW</div>
+        </div>
+      </div>
+      <div>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span>19:30</span>
+              <div class="icons"><i></i><i></i><i></i></div>
+            </div>
+            <div class="phone-body">
+              <div class="greet">Tuesday · Clonskeagh</div>
+              <h4>Tonight needs a <span class="hl">fifth.</span></h4>
+              <div class="pill-row">
+                <span class="pill">Tonight</span>
+                <span class="pill out">Tomorrow</span>
+                <span class="pill out">This week</span>
+              </div>
+
+              <div class="game-card featured">
+                <div class="top">
+                  <span class="time">19:30</span>
+                  <span class="status">1 SPOT</span>
+                </div>
+                <span class="venue">Astro Park · D8</span>
+                <div class="meta">
+                  <span>5-a-side · Casual</span>
+                  <div class="roster">
+                    <i class="filled"></i><i class="filled"></i><i class="filled"></i><i class="filled"></i><i class="you"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-card">
+                <div class="top">
+                  <span class="time">20:30</span>
+                  <span class="status" style="background:transparent; color:var(--muted); border:1px solid rgba(0,0,0,0.15);">3 SPOTS</span>
+                </div>
+                <span class="venue">Herbert Park</span>
+                <div class="meta">
+                  <span>5-a-side · Competitive</span>
+                  <div class="roster">
+                    <i class="filled"></i><i class="filled"></i><i></i><i></i><i></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-card">
+                <div class="top">
+                  <span class="time">21:15</span>
+                  <span class="status" style="background:transparent; color:var(--muted); border:1px solid rgba(0,0,0,0.15);">2 SPOTS</span>
+                </div>
+                <span class="venue">Bushy Park Astro</span>
+                <div class="meta">
+                  <span>5-a-side · Social</span>
+                  <div class="roster">
+                    <i class="filled"></i><i class="filled"></i><i class="filled"></i><i></i><i></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App icon -->
+    <div style="margin-top: 72px;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:24px;">02 · App icon &amp; avatar</div>
+      <div class="appicon-grid">
+        <div class="appicon-tile">
+          <div class="appicon a">5<span class="corner"></span></div>
+          <div class="caption">A · Lime · Primary</div>
+        </div>
+        <div class="appicon-tile">
+          <div class="appicon b">5<span class="corner"></span></div>
+          <div class="caption">B · Dark variant</div>
+        </div>
+        <div class="appicon-tile">
+          <div class="appicon c">5<span class="corner"></span></div>
+          <div class="caption">C · Coral campaign</div>
+        </div>
+        <div class="appicon-tile">
+          <div class="appicon d">5<span class="split"></span></div>
+          <div class="caption">D · Split · experimental</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social -->
+    <div style="margin-top: 64px;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:24px;">03 · Social cover &amp; avatars</div>
+      <div class="social-grid">
+        <div class="social">
+          <div class="cover">
+            <div class="chant">Four in.<br/>One short.<br/><em>Be</em> the <span class="hl">fifth.</span></div>
+            <div class="sig">
+              <div class="mark">5</div>
+              <span>@bethefifth</span>
+            </div>
+          </div>
+          <div class="label">Twitter / X cover · 1500 × 500</div>
+        </div>
+        <div class="social">
+          <div class="avatars">
+            <div class="avatar v1">5</div>
+            <div class="avatar v2">5</div>
+            <div class="avatar v3">5</div>
+            <div class="avatar v4">5</div>
+          </div>
+          <div class="label">Profile avatars · 4 variants</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>BeTheFifth · Brand exploration · v0.1</span>
+    <span>Round 01 · Apr 2026 · Dublin</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
