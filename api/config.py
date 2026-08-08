@@ -23,6 +23,12 @@ class Settings(BaseSettings):
     internal_api_key: str = ""
     # How far ahead the scheduler creates instances of recurring games.
     materialise_horizon_days: int = 14
+    # A squad-only game still short of players this close to kick-off is opened
+    # to the marketplace automatically.
+    marketplace_auto_open_hours: int = 2
+    # Nearby players are pushed about a still-short public game this close to
+    # kick-off — later than the open, so organic fills happen quietly first.
+    marketplace_notify_hours: int = 1
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 

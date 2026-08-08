@@ -205,6 +205,11 @@ class SeriesService:
                     skill_level=series.skill_level,
                     status="open",
                     is_recurring=True,
+                    # A series with a squad belongs to that squad first; it
+                    # only reaches the marketplace if it's still short near
+                    # kick-off. Without a squad there's nobody to reserve it
+                    # for, so it goes public immediately.
+                    visibility="squad_only" if series.squad_id else "public",
                 )
                 db.add(game)
                 created.append(game)

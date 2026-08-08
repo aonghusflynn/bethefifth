@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from config import get_settings
 from database import get_db
 from schemas.series import TickResponse
+from services.marketplace import marketplace_service
 from services.series import series_service
 
 logger = logging.getLogger(__name__)
@@ -41,11 +42,14 @@ async def tick(
 ):
     """Scheduler entry point — safe to call as often as you like.
 
-    Materialises upcoming instances of every active series and invites their
-    squads. Idempotent, so a missed or repeated run is harmless.
+    Runs three idempotent steps in order:
+      1. materialise upcoming instances of active series and invite squads
+      2. open still-short squad-only games to the marketplace (T-2h)
+      3. push still-short public games to nearby players (T-1h)
 
-    Intended to be driven by an external cron at roughly 5-minute intervals,
-    which is the granularity the marketplace auto-open in the next slice needs.
+    Each step is independently idempotent, so a missed or repeated run is
+    harmless. Intended to be driven by an external cron at roughly 5-minute
+    intervals — that granularity is what the T-2h and T-1h windows need.
     """
     settings = get_settings()
     now = datetime.now(timezone.utc)
@@ -53,10 +57,20 @@ async def tick(
     created = await series_service.materialise_upcoming(
         db, now=now, horizon_days=settings.materialise_horizon_days
     )
+    opened = await marketplace_service.auto_open_due(db, now=now)
+    notified = await marketplace_service.notify_due(db, now=now)
 
-    if created:
-        logger.info("Tick materialised %d game(s)", len(created))
+    if created or opened or notified:
+        logger.info(
+            "Tick: materialised=%d opened=%d notified=%d",
+            len(created),
+            len(opened),
+            len(notified),
+        )
 
     return TickResponse(
-        materialised=len(created), game_ids=[g.id for g in created]
+        materialised=len(created),
+        game_ids=[g.id for g in created],
+        marketplace_opened=len(opened),
+        marketplace_notified=len(notified),
     )

@@ -1,4 +1,6 @@
 import uuid
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,6 +13,7 @@ from models.booking import Booking
 from models.user import User
 from schemas.game import GameCreate, GameListResponse, GameResponse, GameUpdate
 from services.geo import bounding_box, haversine_distance
+from services.marketplace import marketplace_service
 
 router = APIRouter(prefix="/games", tags=["games"])
 
@@ -40,8 +43,12 @@ async def list_games(
     if skill_level is not None:
         query = query.where(Game.skill_level == skill_level)
 
-    # Filter for active games (open/full)
-    query = query.where(Game.status.in_(["open", "full"]))
+    # Filter for active games (open/full). Squad-only games are deliberately
+    # excluded — they reach the marketplace only once opened.
+    query = query.where(
+        Game.status.in_(["open", "full"]),
+        Game.visibility == "public",
+    )
 
     # Execute
     result = await db.execute(query)
@@ -97,6 +104,7 @@ async def create_game(
         max_players=game.max_players,
         skill_level=game.skill_level,
         is_private=game.is_private,
+        visibility=game.visibility,
         status="open",
     )
     db.add(new_game)
@@ -138,6 +146,53 @@ async def update_game(
     await db.commit()
     await db.refresh(game)
     return game
+
+
+@router.post("/{game_id}/marketplace", response_model=GameResponse)
+async def open_to_marketplace(
+    game_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Open a squad-only game to the marketplace immediately.
+
+    Otherwise this happens automatically if the game is still short close to
+    kick-off, but an organiser who already knows they're light shouldn't have
+    to wait for that.
+    """
+    try:
+        return await marketplace_service.open_manually(
+            db,
+            game_id=game_id,
+            organiser_id=current_user.id,
+            now=datetime.now(timezone.utc),
+        )
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.delete("/{game_id}/marketplace", response_model=GameResponse)
+async def close_to_marketplace(
+    game_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Take a game back off the marketplace.
+
+    Refused once someone outside the squad has claimed a slot.
+    """
+    try:
+        return await marketplace_service.close_manually(
+            db, game_id=game_id, organiser_id=current_user.id
+        )
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        detail = str(e)
+        status_code = 404 if "not found" in detail.lower() else 409
+        raise HTTPException(status_code=status_code, detail=detail)
 
 
 @router.delete("/{game_id}", status_code=204)

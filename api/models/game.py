@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, func
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
@@ -34,6 +35,23 @@ class Game(Base):
     status: Mapped[str] = mapped_column(String(20), default="open")  # open, full, cancelled, completed
     is_recurring: Mapped[bool] = mapped_column(Boolean, default=False)
     is_private: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    # Marketplace visibility. `squad_only` games are hidden from public
+    # discovery and reserved for the organiser's squad; `public` games appear
+    # in the marketplace for anyone to claim. Defaults to `public` so one-off
+    # games behave exactly as they did before this existed.
+    visibility: Mapped[str] = mapped_column(
+        String(20), default="public", nullable=False
+    )  # squad_only, public
+    # When the game reached the marketplace, whether opened by the organiser or
+    # automatically because it was still short close to kick-off.
+    marketplace_opened_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+    # Set once the "still short" push has gone out, so it only ever fires once.
+    marketplace_notified_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     # Phase 2: payment fields (nullable until Stripe integration)
     cost_per_player: Mapped[int | None] = mapped_column(Integer, nullable=True)
     currency: Mapped[str | None] = mapped_column(String(3), nullable=True)

@@ -17,6 +17,12 @@ _CATALOGUE: dict[str, dict[str, str]] = {
     "squad_invite.subject": {
         "en": "{organiser_name} wants you in their five-a-side squad",
     },
+    "marketplace.push_title": {
+        "en": "{title} needs players",
+    },
+    "marketplace.push_body": {
+        "en": "{slots} spot(s) left, kicking off at {time}. Tap to claim one.",
+    },
     "squad_invite.body_html": {
         "en": (
             "<p>Hi {member_name},</p>"
