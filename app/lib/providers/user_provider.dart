@@ -64,6 +64,16 @@ class UserNotifier extends AsyncNotifier<BtfUser?> {
     state = await AsyncValue.guard(() => build());
   }
 
+  /// Directly injects a fetched user into state without going through
+  /// [build]'s Firebase `authStateChanges` gate. Needed for the dev
+  /// mock-bypass login: it authenticates by setting a raw token on
+  /// [ApiService] rather than signing in through Firebase, so
+  /// `authStateProvider` never emits and a normal [build]/invalidate would
+  /// leave this provider stuck on `null` forever.
+  void setMockUser(BtfUser user) {
+    state = AsyncValue.data(user);
+  }
+
   Future<void> updateProfile({
     String? displayName,
     String? photoUrl,

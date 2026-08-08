@@ -8,6 +8,7 @@ import '../../core/theme.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../services/api_service.dart';
+import '../../models/user.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -218,8 +219,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     try {
       // Only register if this mock user doesn't exist yet — mirrors the
       // real auto-registration handshake in UserNotifier.build().
+      Map<String, dynamic> userJson;
       try {
-        await apiService.getMe();
+        userJson = await apiService.getMe();
       } on DioException catch (e) {
         if (e.response?.statusCode == 404) {
           await apiService.register({
@@ -227,13 +229,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             'display_name': 'Dublin Baller',
             'photo_url': null,
           });
+          userJson = await apiService.getMe();
         } else {
           rethrow;
         }
       }
 
-      ref.invalidate(userProvider);
-      
+      // Mock bypass never signs in through Firebase, so userProvider's
+      // authStateProvider-driven build() would never resolve a user here —
+      // push the fetched user in directly instead of invalidating.
+      ref.read(userProvider.notifier).setMockUser(BtfUser.fromJson(userJson));
+
       if (mounted) {
         context.go('/games');
       }
