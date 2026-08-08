@@ -8,7 +8,11 @@ class Settings(BaseSettings):
     test_database_url: str = "sqlite+aiosqlite:///:memory:"
     firebase_project_id: str = ""
     firebase_service_account_json: str = ""
-    allowed_origins: list[str] = ["http://localhost:3000", "http://localhost:8080"]
+    allowed_origins: list[str] = [
+        "http://localhost:3000",
+        "http://localhost:8080",
+        "http://localhost:5173",
+    ]
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
