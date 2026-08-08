@@ -287,4 +287,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get invalidEmail => 'Enter a valid email';
+
+  @override
+  String get matchName => 'Match name';
 }

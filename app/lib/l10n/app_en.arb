@@ -116,5 +116,6 @@
   "add": "Add",
   "rename": "Rename",
   "requiredField": "Required",
-  "invalidEmail": "Enter a valid email"
+  "invalidEmail": "Enter a valid email",
+  "matchName": "Match name"
 }

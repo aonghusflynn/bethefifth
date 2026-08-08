@@ -68,7 +68,7 @@ class _CreateSeriesScreenState extends ConsumerState<CreateSeriesScreen> {
               controller: _titleController,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                labelText: l10n.gameDetails,
+                labelText: l10n.matchName,
                 hintText: 'Tuesday Night 5s',
               ),
               validator: (v) =>

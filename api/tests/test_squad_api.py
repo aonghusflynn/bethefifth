@@ -210,3 +210,45 @@ async def test_registration_links_pending_squad_invite(client, users, squad_id):
     member = squad.json()["members"][0]
     assert member["status"] == "active"
     assert member["user_id"] == registered.json()["id"]
+
+
+async def test_squad_list_reports_member_counts(client, users, squad_id):
+    """The list endpoint omits members, so counts have to travel with it."""
+    await client.post(
+        f"/api/v1/squads/{squad_id}/members",
+        json={"display_name": "Intruder", "email": "intruder@example.com"},
+        headers=ORGANISER_AUTH,
+    )
+    await client.post(
+        f"/api/v1/squads/{squad_id}/members",
+        json={"display_name": "Barry", "email": "barry@example.com"},
+        headers=ORGANISER_AUTH,
+    )
+
+    listing = await client.get("/api/v1/squads", headers=ORGANISER_AUTH)
+
+    body = listing.json()[0]
+    assert body["active_member_count"] == 1  # matched an existing account
+    assert body["pending_member_count"] == 1  # awaiting sign-up
+
+
+async def test_empty_squad_reports_zero_counts(client, users, squad_id):
+    listing = await client.get("/api/v1/squads", headers=ORGANISER_AUTH)
+
+    body = listing.json()[0]
+    assert body["active_member_count"] == 0
+    assert body["pending_member_count"] == 0
+
+
+async def test_squad_detail_also_reports_counts(client, users, squad_id):
+    await client.post(
+        f"/api/v1/squads/{squad_id}/members",
+        json={"display_name": "Barry", "email": "barry@example.com"},
+        headers=ORGANISER_AUTH,
+    )
+
+    detail = await client.get(f"/api/v1/squads/{squad_id}", headers=ORGANISER_AUTH)
+
+    body = detail.json()
+    assert body["pending_member_count"] == 1
+    assert len(body["members"]) == 1

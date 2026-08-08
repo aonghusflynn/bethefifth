@@ -45,8 +45,21 @@ async def list_squads(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    """List the squads the current user organises."""
-    return await squad_service.list_squads(db, organiser_id=current_user.id)
+    """List the squads the current user organises, with member counts."""
+    squads = await squad_service.list_squads(db, organiser_id=current_user.id)
+    counts = await squad_service.member_counts(db, [s.id for s in squads])
+
+    return [
+        SquadResponse(
+            id=s.id,
+            organiser_id=s.organiser_id,
+            name=s.name,
+            created_at=s.created_at,
+            active_member_count=counts.get(s.id, (0, 0))[0],
+            pending_member_count=counts.get(s.id, (0, 0))[1],
+        )
+        for s in squads
+    ]
 
 
 @router.get("/{squad_id}", response_model=SquadDetailResponse)
@@ -70,6 +83,8 @@ async def get_squad(
         organiser_id=squad.organiser_id,
         name=squad.name,
         created_at=squad.created_at,
+        active_member_count=sum(1 for m in members if m.user_id is not None),
+        pending_member_count=sum(1 for m in members if m.user_id is None),
         members=[SquadMemberResponse.model_validate(m) for m in members],
     )
 

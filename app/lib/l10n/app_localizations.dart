@@ -621,6 +621,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a valid email'**
   String get invalidEmail;
+
+  /// No description provided for @matchName.
+  ///
+  /// In en, this message translates to:
+  /// **'Match name'**
+  String get matchName;
 }
 
 class _AppLocalizationsDelegate

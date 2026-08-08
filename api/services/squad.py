@@ -46,6 +46,28 @@ class SquadService:
         )
         return list(result.scalars().all())
 
+    async def member_counts(
+        self, db: AsyncSession, squad_ids: list[uuid.UUID]
+    ) -> dict[uuid.UUID, tuple[int, int]]:
+        """Active and pending member counts per squad, in one query.
+
+        Returns {squad_id: (active, pending)}. Squads with no members are
+        absent, so callers should default to (0, 0).
+        """
+        if not squad_ids:
+            return {}
+
+        result = await db.execute(
+            select(
+                SquadMember.squad_id,
+                func.count().filter(SquadMember.user_id.is_not(None)),
+                func.count().filter(SquadMember.user_id.is_(None)),
+            )
+            .where(SquadMember.squad_id.in_(squad_ids))
+            .group_by(SquadMember.squad_id)
+        )
+        return {row[0]: (row[1], row[2]) for row in result.all()}
+
     async def list_members(
         self, db: AsyncSession, squad_id: uuid.UUID
     ) -> list[SquadMember]:

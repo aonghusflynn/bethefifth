@@ -50,7 +50,14 @@ class Squad {
   final String organiserId;
   final String name;
   final DateTime createdAt;
+
+  /// Only populated by the detail endpoint. The list endpoint omits members
+  /// and sends counts instead, so never derive counts from this — use
+  /// [activeCount] / [pendingCount].
   final List<SquadMember> members;
+
+  final int activeCount;
+  final int pendingCount;
 
   const Squad({
     required this.id,
@@ -58,23 +65,28 @@ class Squad {
     required this.name,
     required this.createdAt,
     this.members = const [],
+    this.activeCount = 0,
+    this.pendingCount = 0,
   });
-
-  int get activeCount => members.where((m) => !m.isPending).length;
-  int get pendingCount => members.where((m) => m.isPending).length;
 
   factory Squad.fromJson(Map<String, dynamic> json) {
     final rawMembers = json['members'] as List<dynamic>?;
+    final members = rawMembers == null
+        ? const <SquadMember>[]
+        : rawMembers
+            .map((e) => SquadMember.fromJson(e as Map<String, dynamic>))
+            .toList();
+
     return Squad(
       id: json['id'] as String,
       organiserId: json['organiser_id'] as String,
       name: json['name'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
-      members: rawMembers == null
-          ? const []
-          : rawMembers
-              .map((e) => SquadMember.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      members: members,
+      activeCount: json['active_member_count'] as int? ??
+          members.where((m) => !m.isPending).length,
+      pendingCount: json['pending_member_count'] as int? ??
+          members.where((m) => m.isPending).length,
     );
   }
 }
