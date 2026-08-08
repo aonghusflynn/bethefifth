@@ -21,7 +21,7 @@ Initial market: Dublin, Ireland. Expansion planned to UK then EU (France, Nether
 
 - **Game** — a recurring time + location definition (e.g. "Tuesdays 7pm at Irishtown Stadium")
 - **Match** — a single instance of a game on a specific date
-- **Team** — a collection of players, managed by an organiser
+- **Squad** — an organiser's persistent pool of regular players. Deliberately allowed to be larger than a game's `max_players`: every member is invited to each match and slots fill first-come-first-served from whoever accepts. Members without an account yet exist as `invited` rows carrying a name + email, and are linked to a real user on registration
 - **Venue** — pitch location with surface type, size, coordinates
 - **Booking** — a player's confirmed/waitlisted/cancelled slot in a game
 - **Organiser** — creates games, manages teams/rosters, approves join requests, rates players
@@ -40,6 +40,7 @@ Initial market: Dublin, Ireland. Expansion planned to UK then EU (France, Nether
 | Maps | Google Maps Flutter plugin |
 | Hosting | Fly.io (EU region) |
 | Storage | Supabase Storage (profile photos, venue images) |
+| Transactional email | Resend (squad invites to unregistered players) |
 | Payments | Stripe Connect (Phase 2 only) |
 
 ## Development Commands
@@ -128,9 +129,9 @@ Layered: **routers → services → models/schemas → database**
 
 ## Phase Boundaries
 
-**Phase 1 (Dublin MVP):** Free games only, player registration + profiles, browse/join games (map + list), roster management + waitlist, push notifications, pre-seeded Dublin venue directory. No payment fields, no recurring games, no Stripe.
+**Phase 1 (Dublin MVP):** Free games only, player registration + profiles, browse/join games (map + list), roster management + waitlist, push notifications, pre-seeded Dublin venue directory, squads with email invites, recurring games, per-instance attendance requests, marketplace spillover. No payment fields, no Stripe.
 
-**Phase 2:** Stripe Connect onboarding, payment collection on booking, refund logic, Pro subscription, recurring game automation, private games with join codes. `cost_per_player` and `currency` fields on Game are nullable — only populated in Phase 2.
+**Phase 2:** Stripe Connect onboarding, payment collection on booking, refund logic, Pro subscription, private games with join codes. `cost_per_player` and `currency` fields on Game are nullable — only populated in Phase 2.
 
 ## Design System
 
@@ -190,4 +191,7 @@ DATABASE_URL=postgresql+asyncpg://...
 FIREBASE_PROJECT_ID=
 FIREBASE_SERVICE_ACCOUNT_JSON=  # base64 encoded
 ALLOWED_ORIGINS=https://bethefifth.com,http://localhost:3000
+RESEND_API_KEY=              # unset in dev — EmailService logs instead of sending
+EMAIL_FROM=BeTheFifth <noreply@bethefifth.com>
+APP_BASE_URL=http://localhost:5173
 ```

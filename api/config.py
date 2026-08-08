@@ -13,6 +13,11 @@ class Settings(BaseSettings):
         "http://localhost:8080",
         "http://localhost:5173",
     ]
+    # Transactional email (Resend). Unset in dev/test — EmailService then logs
+    # instead of sending, so nothing depends on an external provider locally.
+    resend_api_key: str = ""
+    email_from: str = "BeTheFifth <noreply@bethefifth.com>"
+    app_base_url: str = "http://localhost:5173"
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
