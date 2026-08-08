@@ -12,3 +12,11 @@ class BookingResponse(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class InviteSquadRequest(BaseModel):
+    squad_id: uuid.UUID
+
+
+class AttendanceRequest(BaseModel):
+    attending: bool
