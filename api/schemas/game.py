@@ -13,6 +13,9 @@ class GameCreate(BaseModel):
     max_players: int = Field(10, ge=2, le=30)
     skill_level: int = Field(3, ge=1, le=5)
     is_private: bool = False
+    # `squad_only` keeps a one-off game off the marketplace until the organiser
+    # opens it, or until the automatic open fires close to kick-off.
+    visibility: str = Field("public", pattern="^(public|squad_only)$")
 
 
 class GameUpdate(BaseModel):
@@ -39,6 +42,9 @@ class GameResponse(BaseModel):
     status: str
     is_recurring: bool
     is_private: bool
+    visibility: str
+    marketplace_opened_at: datetime | None
+    marketplace_notified_at: datetime | None
     cost_per_player: int | None
     currency: str | None
 

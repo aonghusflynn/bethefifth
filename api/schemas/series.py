@@ -44,3 +44,5 @@ class SeriesResponse(BaseModel):
 class TickResponse(BaseModel):
     materialised: int
     game_ids: list[uuid.UUID]
+    marketplace_opened: int = 0
+    marketplace_notified: int = 0

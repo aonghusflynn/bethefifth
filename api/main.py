@@ -1,3 +1,4 @@
+import logging
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
@@ -15,6 +16,15 @@ from database import async_session
 from models.venue import Venue
 
 settings = get_settings()
+
+# Without this, application loggers never reach uvicorn's handlers and every
+# logger.info/exception in the services is silently dropped. That matters most
+# for the cron-driven scheduler, whose only observable output is its logs —
+# including the paths that deliberately swallow an error and carry on.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)-8s %(name)s: %(message)s",
+)
 
 
 @asynccontextmanager

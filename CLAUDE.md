@@ -108,6 +108,10 @@ Layered: **routers → services → models/schemas → database**
 - Player cancellation → slot opens, waitlist promotion + notification
 - Recurring games use rrule; API auto-creates next instance on completion
 - Private games require organiser to share a join link/code
+- Games are `squad_only` or `public`. Only `public` games appear in marketplace discovery. Instances materialised from a series with a squad start `squad_only`; everything else starts `public`
+- Marketplace spillover runs in two stages: a still-short `squad_only` game is opened automatically at T-2h, and a still-short `public` game pushes to nearby players at T-1h. The gap is deliberate — a game that fills quietly in between never generates a notification. Organisers can also open manually at any time
+- Once opened, slots are fair game for anyone; squad membership confers no priority. Waitlist promotion stays plain FIFO
+- An organiser can pull a game back off the marketplace only while no outside player has claimed a slot
 - Geo queries use Haversine with bounding-box pre-filter (PostGIS planned for scale)
 - Skill levels: 1=Beginner, 2=Casual, 3=Intermediate, 4=Competitive, 5=Elite
 - Ratings are two-way: organisers rate players (skill, punctuality, soundness); players rate matches (game quality, venue, organisation)
@@ -196,6 +200,8 @@ EMAIL_FROM=BeTheFifth <noreply@bethefifth.com>
 APP_BASE_URL=http://localhost:5173
 INTERNAL_API_KEY=            # unset disables /internal/* entirely (fails closed)
 MATERIALISE_HORIZON_DAYS=14
+MARKETPLACE_AUTO_OPEN_HOURS=2   # T-2h: short squad-only games go public
+MARKETPLACE_NOTIFY_HOURS=1      # T-1h: still-short public games push to nearby players
 ```
 
 Note: `.env` is not watched by `uvicorn --reload` and settings are `@lru_cache`d, so changing these needs a full server restart, not just a reload.
