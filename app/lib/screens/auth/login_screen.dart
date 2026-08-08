@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -213,17 +214,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // Directly inject a developer token in ApiService and bypass auth
     final apiService = ref.read(apiServiceProvider);
     apiService.setAuthToken('mock-token-dublin-player');
-    
+
     try {
-      // Create user if not exists or fetch profile
+      // Only register if this mock user doesn't exist yet — mirrors the
+      // real auto-registration handshake in UserNotifier.build().
       try {
-        await apiService.register({
-          'email': 'dublin.player@example.com',
-          'display_name': 'Dublin Baller',
-          'photo_url': null,
-        });
-      } catch (_) {} // Ignore conflict
-      
+        await apiService.getMe();
+      } on DioException catch (e) {
+        if (e.response?.statusCode == 404) {
+          await apiService.register({
+            'email': 'dublin.player@example.com',
+            'display_name': 'Dublin Baller',
+            'photo_url': null,
+          });
+        } else {
+          rethrow;
+        }
+      }
+
       ref.invalidate(userProvider);
       
       if (mounted) {
