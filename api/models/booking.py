@@ -22,7 +22,9 @@ class Booking(Base):
     )
     status: Mapped[str] = mapped_column(
         String(20), default="confirmed"
-    )  # confirmed, waitlisted, cancelled
+    )  # invited, confirmed, waitlisted, declined, cancelled
+    # Only `confirmed` occupies a slot and counts toward Game.current_players.
+    # `invited` is awaiting a response; `declined`/`cancelled` hold nothing.
     created_at: Mapped[str] = mapped_column(
         server_default=func.now(),
         default=lambda: datetime.now(timezone.utc).isoformat(),
