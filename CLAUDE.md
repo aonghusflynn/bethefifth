@@ -19,8 +19,8 @@ Initial market: Dublin, Ireland. Expansion planned to UK then EU (France, Nether
 
 ## Domain Model
 
-- **Game** — a recurring time + location definition (e.g. "Tuesdays 7pm at Irishtown Stadium")
-- **Match** — a single instance of a game on a specific date
+- **GameSeries** — a recurring fixture definition (e.g. "Tuesdays 7pm at Irishtown Stadium"), stored as a first occurrence plus an iCalendar `rrule`. Nobody books a series
+- **Game** — a single bookable match on a specific date. This is the unit players actually see and respond to. `series_id` is set when it was materialised from a series and `NULL` for one-offs, so bookings, waitlists and marketplace discovery work identically either way
 - **Squad** — an organiser's persistent pool of regular players. Deliberately allowed to be larger than a game's `max_players`: every member is invited to each match and slots fill first-come-first-served from whoever accepts. Members without an account yet exist as `invited` rows carrying a name + email, and are linked to a real user on registration
 - **Venue** — pitch location with surface type, size, coordinates
 - **Booking** — a player's confirmed/waitlisted/cancelled slot in a game
@@ -194,4 +194,18 @@ ALLOWED_ORIGINS=https://bethefifth.com,http://localhost:3000
 RESEND_API_KEY=              # unset in dev — EmailService logs instead of sending
 EMAIL_FROM=BeTheFifth <noreply@bethefifth.com>
 APP_BASE_URL=http://localhost:5173
+INTERNAL_API_KEY=            # unset disables /internal/* entirely (fails closed)
+MATERIALISE_HORIZON_DAYS=14
 ```
+
+Note: `.env` is not watched by `uvicorn --reload` and settings are `@lru_cache`d, so changing these needs a full server restart, not just a reload.
+
+## Scheduled Work
+
+Recurring games are materialised by a cron-driven endpoint rather than an in-process scheduler, so it stays testable and survives multiple app instances:
+
+```bash
+curl -X POST https://<host>/api/v1/internal/tick -H "X-Internal-Key: $INTERNAL_API_KEY"
+```
+
+Call it roughly every 5 minutes. It is idempotent — a missed or repeated run is harmless — and it fails closed: with no `INTERNAL_API_KEY` configured the endpoint returns 503 rather than running unauthenticated. Five-minute granularity is required by the marketplace auto-open, which fires on a T-2h window.

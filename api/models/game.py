@@ -19,6 +19,11 @@ class Game(Base):
     venue_id: Mapped[uuid.UUID] = mapped_column(
         PG_UUID(as_uuid=True), ForeignKey("venues.id"), nullable=False
     )
+    # Set when this game was materialised from a recurring series. NULL for
+    # one-off games, so a game stays the bookable unit either way.
+    series_id: Mapped[uuid.UUID | None] = mapped_column(
+        PG_UUID(as_uuid=True), ForeignKey("game_series.id"), nullable=True
+    )
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str | None] = mapped_column(String(1000))
     starts_at: Mapped[str] = mapped_column(DateTime(timezone=True), nullable=False)

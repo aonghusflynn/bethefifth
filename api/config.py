@@ -18,6 +18,11 @@ class Settings(BaseSettings):
     resend_api_key: str = ""
     email_from: str = "BeTheFifth <noreply@bethefifth.com>"
     app_base_url: str = "http://localhost:5173"
+    # Shared secret for cron-driven endpoints under /internal. Unset disables
+    # them entirely — they create games and send pushes, so they fail closed.
+    internal_api_key: str = ""
+    # How far ahead the scheduler creates instances of recurring games.
+    materialise_horizon_days: int = 14
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 

@@ -28,6 +28,7 @@ class GameResponse(BaseModel):
     id: uuid.UUID
     organiser_id: uuid.UUID
     venue_id: uuid.UUID
+    series_id: uuid.UUID | None
     title: str
     description: str | None
     starts_at: datetime
