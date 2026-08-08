@@ -38,6 +38,10 @@ class SquadResponse(BaseModel):
     organiser_id: uuid.UUID
     name: str
     created_at: datetime
+    # Counts travel with the summary so a squad list doesn't have to fetch
+    # every squad's members just to say how big it is.
+    active_member_count: int = 0
+    pending_member_count: int = 0
 
     model_config = {"from_attributes": True}
 

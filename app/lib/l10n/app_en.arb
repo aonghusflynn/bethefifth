@@ -24,5 +24,98 @@
   "time": "Time",
   "cancel": "Cancel",
   "confirm": "Confirm",
-  "save": "Save"
+  "save": "Save",
+  "mySquads": "My Squads",
+  "recurringGames": "Recurring Games",
+  "organiserTools": "Organiser Tools",
+  "newSquad": "New Squad",
+  "squadName": "Squad name",
+  "squadNameHint": "e.g. Tuesday Regulars",
+  "noSquadsTitle": "No squads yet",
+  "noSquadsBody": "A squad is your pool of regular players. It can be bigger than the game — everyone gets invited and the first to accept play.",
+  "createSquad": "Create squad",
+  "squadMembersHeading": "Members",
+  "addMember": "Add player",
+  "memberName": "Name",
+  "memberEmail": "Email",
+  "memberEmailHint": "Used to invite them if they're not on BeTheFifth yet",
+  "memberCountSummary": "{active} on board, {pending} awaiting sign-up",
+  "@memberCountSummary": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
+    }
+  },
+  "pendingInvite": "Invite sent",
+  "squadEmptyMembers": "No players yet. Add your regulars — they don't need an account.",
+  "removePlayer": "Remove player",
+  "removePlayerConfirm": "Remove {name} from this squad?",
+  "@removePlayerConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteSquad": "Delete squad",
+  "deleteSquadConfirm": "Delete this squad? Recurring games using it will stop inviting anyone.",
+  "renameSquad": "Rename squad",
+  "pendingMemberNote": "Waiting for them to sign up. They'll join automatically and start getting match invites.",
+  "newRecurringGame": "New Recurring Game",
+  "noSeriesTitle": "No recurring games",
+  "noSeriesBody": "Set up a fixture that repeats, and your squad gets invited to every instance automatically.",
+  "repeats": "Repeats",
+  "repeatWeekly": "Weekly",
+  "repeatFortnightly": "Every 2 weeks",
+  "repeatMonthly": "Monthly",
+  "firstMatch": "First match",
+  "inviteSquad": "Invite squad",
+  "noSquadOption": "No squad — fill from the marketplace",
+  "seriesPaused": "Paused",
+  "pauseSeries": "Pause",
+  "resumeSeries": "Resume",
+  "pauseSeriesNote": "Pausing stops new matches being scheduled. Matches already on the calendar are unaffected.",
+  "deleteSeries": "Delete series",
+  "deleteSeriesConfirm": "Delete this recurring game? Matches already scheduled will stay, as one-offs.",
+  "createRecurringGame": "Create recurring game",
+  "seriesCreated": "Recurring game created. Matches are scheduled automatically.",
+  "attendanceQuestion": "Are you playing?",
+  "attendancePrompt": "Your organiser needs to know who's in.",
+  "imIn": "I'm in",
+  "cantMakeIt": "Can't make it",
+  "statusConfirmed": "You're in",
+  "statusWaitlisted": "On the waitlist",
+  "statusDeclined": "You said no",
+  "declinedBody": "Changed your mind? You can still grab a spot if there's room.",
+  "changeToAttending": "Actually, I'm in",
+  "waitlistedBody": "The game is full. You'll be promoted automatically if someone drops out.",
+  "visibilitySquadOnly": "Squad only",
+  "visibilityPublic": "On the marketplace",
+  "openToMarketplace": "Open to marketplace",
+  "removeFromMarketplace": "Remove from marketplace",
+  "marketplaceHint": "Short on players? Open it up and anyone nearby can claim a spot.",
+  "marketplaceAutoHint": "This opens automatically 2 hours before kick-off if you're still short.",
+  "marketplaceOpenedNote": "Anyone can claim a spot in this game.",
+  "marketplaceCloseBlocked": "Someone outside your squad has already joined, so this can't be pulled back.",
+  "inviteSquadToGame": "Invite a squad",
+  "squadInvited": "{count} players invited",
+  "@squadInvited": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "retry": "Try Again",
+  "remove": "Remove",
+  "delete": "Delete",
+  "add": "Add",
+  "rename": "Rename",
+  "requiredField": "Required",
+  "invalidEmail": "Enter a valid email",
+  "matchName": "Match name"
 }

@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime, timezone
 
 import pytest
+from sqlalchemy.future import select
 
 from models.booking import Booking
 from models.game import Game
@@ -335,3 +336,46 @@ async def test_marketplace_join_still_works_alongside_invitations(db, setup):
     await db.refresh(game)
     assert game.current_players == 10
     assert game.status == "full"
+
+
+async def test_rejoining_after_declining_revives_the_booking(db, setup):
+    """(game_id, player_id) is unique, so re-joining must not insert a second row."""
+    game, squad, organiser = setup["game"], setup["squad"], setup["organiser"]
+    player = setup["players"][0]
+
+    await booking_service.invite_squad(
+        db, game_id=game.id, squad_id=squad.id, organiser_id=organiser.id
+    )
+    await booking_service.respond_to_invitation(
+        db, game_id=game.id, player_id=player.id, attending=False
+    )
+
+    revived = await booking_service.create_booking(db, game.id, player.id)
+
+    assert revived.status == "confirmed"
+    await db.refresh(game)
+    assert game.current_players == 1
+
+    result = await db.execute(
+        select(Booking).where(
+            Booking.game_id == game.id, Booking.player_id == player.id
+        )
+    )
+    assert len(list(result.scalars().all())) == 1
+
+
+async def test_rejoining_after_cancelling_revives_the_booking(db, setup):
+    game = setup["game"]
+    stranger = setup["stranger"]
+
+    booking = await booking_service.create_booking(db, game.id, stranger.id)
+    await booking_service.cancel_booking(db, booking.id)
+    await db.refresh(game)
+    assert game.current_players == 0
+
+    revived = await booking_service.create_booking(db, game.id, stranger.id)
+
+    assert revived.status == "confirmed"
+    assert revived.id == booking.id  # same row, not a duplicate
+    await db.refresh(game)
+    assert game.current_players == 1

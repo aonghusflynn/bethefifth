@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,11 +6,14 @@ import 'package:intl/intl.dart';
 
 import '../../core/theme.dart';
 import '../../core/constants.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/games_provider.dart';
+import '../../providers/squads_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../models/game.dart';
 import '../../models/booking.dart';
 import '../../models/user.dart';
+import 'widgets/attendance_bar.dart';
 
 class GameDetailScreen extends ConsumerWidget {
   final String gameId;
@@ -89,6 +93,12 @@ class GameDetailScreen extends ConsumerWidget {
                             
                           const SizedBox(height: BtfSpace.x4),
                           _buildVenueDetailsCard(context, theme, game),
+
+                          // Organiser-only roster controls.
+                          if (userState.value?.id == game.organiserId) ...[
+                            const SizedBox(height: BtfSpace.x4),
+                            _OrganiserToolsCard(gameId: gameId, game: game),
+                          ],
                           const SizedBox(height: BtfSpace.x6),
                         ],
                       ),
@@ -686,42 +696,38 @@ class GameDetailScreen extends ConsumerWidget {
             ),
           ),
         ),
-        child: myBooking != null
-            ? Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => _confirmCancelBooking(context, ref, myBooking),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: BtfColors.coral,
-                        side: const BorderSide(color: BtfColors.coral, width: 1.5),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      child: const Text('CANCEL BOOKING', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                ],
-              )
-            : Row(
-                children: [
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () => ref.read(gameDetailProvider(gameId).notifier).joinGame(),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: isFull ? BtfColors.warning : BtfColors.lime,
-                        foregroundColor: BtfColors.ink,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      child: Text(
-                        isFull ? 'JOIN WAITLIST QUEUE' : 'BE THE 5TH!',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+        child: AttendanceBar(
+          booking: myBooking,
+          isFull: isFull,
+          onRespond: (attending) => _respond(
+            context,
+            ref.read(gameDetailProvider(gameId).notifier),
+            attending: attending,
+          ),
+          onCancel: () => _confirmCancelBooking(context, ref, myBooking!),
+          onJoin: () => ref.read(gameDetailProvider(gameId).notifier).joinGame(),
+        ),
       ),
     );
+  }
+
+  Future<void> _respond(
+    BuildContext context,
+    GameDetailNotifier notifier, {
+    required bool attending,
+  }) async {
+    try {
+      await notifier.respondToInvitation(attending: attending);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: BtfColors.coral,
+          ),
+        );
+      }
+    }
   }
 
   void _confirmCancelBooking(BuildContext context, WidgetRef ref, Booking booking) {
@@ -810,4 +816,166 @@ class PitchPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+/// Roster controls only the game's organiser sees: push the game out to the
+/// marketplace when short, or invite one of their squads.
+class _OrganiserToolsCard extends ConsumerWidget {
+  final String gameId;
+  final Game game;
+
+  const _OrganiserToolsCard({required this.gameId, required this.game});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    final squads = ref.watch(squadsProvider).value ?? const [];
+
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: BtfSpace.x4),
+      padding: const EdgeInsets.all(BtfSpace.x4),
+      decoration: BoxDecoration(
+        color: isDark ? BtfColors.ink2 : BtfColors.paper2,
+        borderRadius: BorderRadius.circular(BtfRadius.md),
+        border: Border.all(
+          color: isDark ? BtfColors.outline.withOpacity(0.4) : BtfColors.chalk,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.organiserTools.toUpperCase(),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: BtfColors.muted,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: BtfSpace.x3),
+
+          // Visibility
+          Row(
+            children: [
+              Icon(
+                game.isSquadOnly ? Icons.lock_outline : Icons.public,
+                size: 18,
+                color: game.isSquadOnly ? BtfColors.muted : BtfColors.limeDeep,
+              ),
+              const SizedBox(width: BtfSpace.x2),
+              Expanded(
+                child: Text(
+                  game.isSquadOnly
+                      ? l10n.visibilitySquadOnly
+                      : l10n.visibilityPublic,
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: BtfSpace.x2),
+          Text(
+            game.isSquadOnly ? l10n.marketplaceAutoHint : l10n.marketplaceOpenedNote,
+            style: theme.textTheme.bodySmall
+                ?.copyWith(color: BtfColors.muted, height: 1.3),
+          ),
+          const SizedBox(height: BtfSpace.x3),
+          SizedBox(
+            width: double.infinity,
+            child: game.isSquadOnly
+                ? FilledButton.icon(
+                    onPressed: () => _setMarketplace(context, ref, true),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: BtfColors.lime,
+                      foregroundColor: BtfColors.ink,
+                    ),
+                    icon: const Icon(Icons.campaign_outlined, size: 18),
+                    label: Text(
+                      l10n.openToMarketplace,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                : OutlinedButton.icon(
+                    onPressed: () => _setMarketplace(context, ref, false),
+                    icon: const Icon(Icons.lock_outline, size: 18),
+                    label: Text(l10n.removeFromMarketplace),
+                  ),
+          ),
+
+          if (squads.isNotEmpty) ...[
+            const SizedBox(height: BtfSpace.x4),
+            const Divider(height: 1),
+            const SizedBox(height: BtfSpace.x3),
+            Text(
+              l10n.inviteSquadToGame,
+              style: theme.textTheme.bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: BtfSpace.x2),
+            Wrap(
+              spacing: BtfSpace.x2,
+              runSpacing: BtfSpace.x2,
+              children: squads
+                  .map((s) => ActionChip(
+                        avatar: const Icon(Icons.groups_outlined, size: 16),
+                        label: Text(s.name),
+                        onPressed: () => _inviteSquad(context, ref, s.id),
+                      ))
+                  .toList(),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Future<void> _setMarketplace(
+    BuildContext context,
+    WidgetRef ref,
+    bool open,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    try {
+      await ref
+          .read(gameDetailProvider(gameId).notifier)
+          .setMarketplaceOpen(open);
+    } on DioException catch (e) {
+      if (!context.mounted) return;
+      // 409 means an outsider already claimed a slot, so it can't be pulled back.
+      final message = e.response?.statusCode == 409
+          ? l10n.marketplaceCloseBlocked
+          : e.message ?? e.toString();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), backgroundColor: BtfColors.coral),
+      );
+    }
+  }
+
+  Future<void> _inviteSquad(
+    BuildContext context,
+    WidgetRef ref,
+    String squadId,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    try {
+      final count =
+          await ref.read(gameDetailProvider(gameId).notifier).inviteSquad(squadId);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.squadInvited(count)),
+          backgroundColor: BtfColors.limeDeep,
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString()), backgroundColor: BtfColors.coral),
+      );
+    }
+  }
 }

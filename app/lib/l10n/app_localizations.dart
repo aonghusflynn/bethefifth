@@ -213,6 +213,420 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @mySquads.
+  ///
+  /// In en, this message translates to:
+  /// **'My Squads'**
+  String get mySquads;
+
+  /// No description provided for @recurringGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring Games'**
+  String get recurringGames;
+
+  /// No description provided for @organiserTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Organiser Tools'**
+  String get organiserTools;
+
+  /// No description provided for @newSquad.
+  ///
+  /// In en, this message translates to:
+  /// **'New Squad'**
+  String get newSquad;
+
+  /// No description provided for @squadName.
+  ///
+  /// In en, this message translates to:
+  /// **'Squad name'**
+  String get squadName;
+
+  /// No description provided for @squadNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Tuesday Regulars'**
+  String get squadNameHint;
+
+  /// No description provided for @noSquadsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No squads yet'**
+  String get noSquadsTitle;
+
+  /// No description provided for @noSquadsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A squad is your pool of regular players. It can be bigger than the game — everyone gets invited and the first to accept play.'**
+  String get noSquadsBody;
+
+  /// No description provided for @createSquad.
+  ///
+  /// In en, this message translates to:
+  /// **'Create squad'**
+  String get createSquad;
+
+  /// No description provided for @squadMembersHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get squadMembersHeading;
+
+  /// No description provided for @addMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Add player'**
+  String get addMember;
+
+  /// No description provided for @memberName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get memberName;
+
+  /// No description provided for @memberEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get memberEmail;
+
+  /// No description provided for @memberEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Used to invite them if they\'re not on BeTheFifth yet'**
+  String get memberEmailHint;
+
+  /// No description provided for @memberCountSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{active} on board, {pending} awaiting sign-up'**
+  String memberCountSummary(int active, int pending);
+
+  /// No description provided for @pendingInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite sent'**
+  String get pendingInvite;
+
+  /// No description provided for @squadEmptyMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'No players yet. Add your regulars — they don\'t need an account.'**
+  String get squadEmptyMembers;
+
+  /// No description provided for @removePlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove player'**
+  String get removePlayer;
+
+  /// No description provided for @removePlayerConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from this squad?'**
+  String removePlayerConfirm(String name);
+
+  /// No description provided for @deleteSquad.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete squad'**
+  String get deleteSquad;
+
+  /// No description provided for @deleteSquadConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this squad? Recurring games using it will stop inviting anyone.'**
+  String get deleteSquadConfirm;
+
+  /// No description provided for @renameSquad.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename squad'**
+  String get renameSquad;
+
+  /// No description provided for @pendingMemberNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for them to sign up. They\'ll join automatically and start getting match invites.'**
+  String get pendingMemberNote;
+
+  /// No description provided for @newRecurringGame.
+  ///
+  /// In en, this message translates to:
+  /// **'New Recurring Game'**
+  String get newRecurringGame;
+
+  /// No description provided for @noSeriesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No recurring games'**
+  String get noSeriesTitle;
+
+  /// No description provided for @noSeriesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a fixture that repeats, and your squad gets invited to every instance automatically.'**
+  String get noSeriesBody;
+
+  /// No description provided for @repeats.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats'**
+  String get repeats;
+
+  /// No description provided for @repeatWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get repeatWeekly;
+
+  /// No description provided for @repeatFortnightly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 2 weeks'**
+  String get repeatFortnightly;
+
+  /// No description provided for @repeatMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get repeatMonthly;
+
+  /// No description provided for @firstMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'First match'**
+  String get firstMatch;
+
+  /// No description provided for @inviteSquad.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite squad'**
+  String get inviteSquad;
+
+  /// No description provided for @noSquadOption.
+  ///
+  /// In en, this message translates to:
+  /// **'No squad — fill from the marketplace'**
+  String get noSquadOption;
+
+  /// No description provided for @seriesPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get seriesPaused;
+
+  /// No description provided for @pauseSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get pauseSeries;
+
+  /// No description provided for @resumeSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get resumeSeries;
+
+  /// No description provided for @pauseSeriesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Pausing stops new matches being scheduled. Matches already on the calendar are unaffected.'**
+  String get pauseSeriesNote;
+
+  /// No description provided for @deleteSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete series'**
+  String get deleteSeries;
+
+  /// No description provided for @deleteSeriesConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this recurring game? Matches already scheduled will stay, as one-offs.'**
+  String get deleteSeriesConfirm;
+
+  /// No description provided for @createRecurringGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Create recurring game'**
+  String get createRecurringGame;
+
+  /// No description provided for @seriesCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring game created. Matches are scheduled automatically.'**
+  String get seriesCreated;
+
+  /// No description provided for @attendanceQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you playing?'**
+  String get attendanceQuestion;
+
+  /// No description provided for @attendancePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Your organiser needs to know who\'s in.'**
+  String get attendancePrompt;
+
+  /// No description provided for @imIn.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m in'**
+  String get imIn;
+
+  /// No description provided for @cantMakeIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t make it'**
+  String get cantMakeIt;
+
+  /// No description provided for @statusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re in'**
+  String get statusConfirmed;
+
+  /// No description provided for @statusWaitlisted.
+  ///
+  /// In en, this message translates to:
+  /// **'On the waitlist'**
+  String get statusWaitlisted;
+
+  /// No description provided for @statusDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'You said no'**
+  String get statusDeclined;
+
+  /// No description provided for @declinedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed your mind? You can still grab a spot if there\'s room.'**
+  String get declinedBody;
+
+  /// No description provided for @changeToAttending.
+  ///
+  /// In en, this message translates to:
+  /// **'Actually, I\'m in'**
+  String get changeToAttending;
+
+  /// No description provided for @waitlistedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The game is full. You\'ll be promoted automatically if someone drops out.'**
+  String get waitlistedBody;
+
+  /// No description provided for @visibilitySquadOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Squad only'**
+  String get visibilitySquadOnly;
+
+  /// No description provided for @visibilityPublic.
+  ///
+  /// In en, this message translates to:
+  /// **'On the marketplace'**
+  String get visibilityPublic;
+
+  /// No description provided for @openToMarketplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Open to marketplace'**
+  String get openToMarketplace;
+
+  /// No description provided for @removeFromMarketplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from marketplace'**
+  String get removeFromMarketplace;
+
+  /// No description provided for @marketplaceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Short on players? Open it up and anyone nearby can claim a spot.'**
+  String get marketplaceHint;
+
+  /// No description provided for @marketplaceAutoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This opens automatically 2 hours before kick-off if you\'re still short.'**
+  String get marketplaceAutoHint;
+
+  /// No description provided for @marketplaceOpenedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone can claim a spot in this game.'**
+  String get marketplaceOpenedNote;
+
+  /// No description provided for @marketplaceCloseBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone outside your squad has already joined, so this can\'t be pulled back.'**
+  String get marketplaceCloseBlocked;
+
+  /// No description provided for @inviteSquadToGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a squad'**
+  String get inviteSquadToGame;
+
+  /// No description provided for @squadInvited.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} players invited'**
+  String squadInvited(int count);
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get retry;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @rename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get rename;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredField;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email'**
+  String get invalidEmail;
+
+  /// No description provided for @matchName.
+  ///
+  /// In en, this message translates to:
+  /// **'Match name'**
+  String get matchName;
 }
 
 class _AppLocalizationsDelegate

@@ -108,6 +108,114 @@ class ApiService {
     return response.data;
   }
 
+  /// Answer a match invitation. Accepting claims a slot first-come-first-served
+  /// and falls back to the waitlist when the game is full.
+  Future<Map<String, dynamic>> respondToAttendance(
+    String gameId, {
+    required bool attending,
+  }) async {
+    final response = await _dio.post(
+      'games/$gameId/attendance',
+      data: {'attending': attending},
+    );
+    return response.data;
+  }
+
+  /// Invite a whole squad to a game. Invitations claim no slots.
+  Future<List<dynamic>> inviteSquadToGame(
+    String gameId, {
+    required String squadId,
+  }) async {
+    final response = await _dio.post(
+      'games/$gameId/invitations',
+      data: {'squad_id': squadId},
+    );
+    return response.data as List<dynamic>;
+  }
+
+  // Marketplace
+  Future<Map<String, dynamic>> openToMarketplace(String gameId) async {
+    final response = await _dio.post('games/$gameId/marketplace');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> closeToMarketplace(String gameId) async {
+    final response = await _dio.delete('games/$gameId/marketplace');
+    return response.data;
+  }
+
+  // Squads
+  Future<List<dynamic>> listSquads() async {
+    final response = await _dio.get('squads');
+    return response.data as List<dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getSquad(String squadId) async {
+    final response = await _dio.get('squads/$squadId');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> createSquad(String name) async {
+    final response = await _dio.post('squads', data: {'name': name});
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> renameSquad(String squadId, String name) async {
+    final response = await _dio.patch('squads/$squadId', data: {'name': name});
+    return response.data;
+  }
+
+  Future<void> deleteSquad(String squadId) async {
+    await _dio.delete('squads/$squadId');
+  }
+
+  Future<Map<String, dynamic>> addSquadMember(
+    String squadId, {
+    required String displayName,
+    String? email,
+    String? phone,
+  }) async {
+    final response = await _dio.post(
+      'squads/$squadId/members',
+      data: {
+        'display_name': displayName,
+        if (email != null && email.isNotEmpty) 'email': email,
+        if (phone != null && phone.isNotEmpty) 'phone': phone,
+      },
+    );
+    return response.data;
+  }
+
+  Future<void> removeSquadMember(String squadId, String memberId) async {
+    await _dio.delete('squads/$squadId/members/$memberId');
+  }
+
+  // Recurring series
+  Future<List<dynamic>> listSeries() async {
+    final response = await _dio.get('series');
+    return response.data as List<dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createSeries(Map<String, dynamic> data) async {
+    final response = await _dio.post('series', data: data);
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> setSeriesActive(
+    String seriesId, {
+    required bool isActive,
+  }) async {
+    final response = await _dio.patch(
+      'series/$seriesId',
+      data: {'is_active': isActive},
+    );
+    return response.data;
+  }
+
+  Future<void> deleteSeries(String seriesId) async {
+    await _dio.delete('series/$seriesId');
+  }
+
 
   // Venues
   Future<List<dynamic>> listVenues({String? city}) async {
