@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,6 +8,9 @@ from database import get_db
 from middleware.auth import get_firebase_user_claims, get_current_user
 from models.user import User
 from schemas.user import UserResponse
+from services.squad import squad_service
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -36,6 +41,13 @@ async def register(
     db.add(new_user)
     await db.commit()
     await db.refresh(new_user)
+
+    # Attach the new account to any squad invites that were waiting on this
+    # email address. Never let this block a successful registration.
+    try:
+        await squad_service.link_pending_members(db, new_user)
+    except Exception:
+        logger.exception("Failed to link pending squad invites for %s", new_user.id)
 
     return new_user
 

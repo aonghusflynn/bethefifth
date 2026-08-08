@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from config import get_settings
-from routers import auth, bookings, games, users, venues
+from routers import auth, bookings, games, squads, users, venues
 from services.firebase import firebase_service
 
 import uuid
@@ -91,6 +91,7 @@ app.include_router(games.router, prefix="/api/v1")
 app.include_router(bookings.router, prefix="/api/v1")
 app.include_router(venues.router, prefix="/api/v1")
 app.include_router(users.router, prefix="/api/v1")
+app.include_router(squads.router, prefix="/api/v1")
 
 
 @app.get("/api/v1/health")
