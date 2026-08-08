@@ -93,7 +93,7 @@ class GameDetailNotifier extends FamilyAsyncNotifier<Game?, String> {
   Future<void> cancelBooking(String bookingId) async {
     final apiService = ref.read(apiServiceProvider);
     final gameId = arg;
-    
+
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       await apiService.cancelBooking(bookingId);
@@ -102,6 +102,51 @@ class GameDetailNotifier extends FamilyAsyncNotifier<Game?, String> {
       ref.invalidate(userBookedGamesProvider);
       return build(gameId);
     });
+  }
+
+  /// Answer a match invitation.
+  ///
+  /// Accepting claims a slot first-come-first-served, falling back to the
+  /// waitlist if the game filled first. Declining a slot already held releases
+  /// it and promotes whoever is next in the queue.
+  Future<void> respondToInvitation({required bool attending}) async {
+    final apiService = ref.read(apiServiceProvider);
+    final gameId = arg;
+
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await apiService.respondToAttendance(gameId, attending: attending);
+      ref.invalidate(gamesProvider);
+      ref.invalidate(myBookingProvider(gameId));
+      ref.invalidate(userBookedGamesProvider);
+      return build(gameId);
+    });
+  }
+
+  /// Invite a squad to this game. Invitations claim no slots.
+  Future<int> inviteSquad(String squadId) async {
+    final apiService = ref.read(apiServiceProvider);
+    final invited = await apiService.inviteSquadToGame(arg, squadId: squadId);
+    ref.invalidate(myBookingProvider(arg));
+    state = await AsyncValue.guard(() => build(arg));
+    return invited.length;
+  }
+
+  /// Open this game to the marketplace, or take it back off.
+  ///
+  /// Closing fails with a 409 once an outside player has claimed a slot; the
+  /// caller surfaces that to the organiser.
+  Future<void> setMarketplaceOpen(bool open) async {
+    final apiService = ref.read(apiServiceProvider);
+    final gameId = arg;
+
+    if (open) {
+      await apiService.openToMarketplace(gameId);
+    } else {
+      await apiService.closeToMarketplace(gameId);
+    }
+    ref.invalidate(gamesProvider);
+    state = await AsyncValue.guard(() => build(gameId));
   }
 }
 

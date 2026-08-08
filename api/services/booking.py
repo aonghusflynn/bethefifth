@@ -100,20 +100,23 @@ class BookingService:
         if game is None:
             raise ValueError("Game not found.")
 
-        existing_result = await db.execute(
-            select(Booking).where(
-                Booking.game_id == game_id,
-                Booking.player_id == player_id,
-                Booking.status.not_in(INACTIVE_STATUSES),
-            )
-        )
-        if existing_result.scalar_one_or_none() is not None:
+        # Look for *any* prior booking, not just an active one. (game_id,
+        # player_id) is unique, so someone re-joining after cancelling or
+        # declining has to revive their existing row — inserting a second one
+        # would violate the constraint and surface as a 500.
+        existing = await self.get_player_booking(db, game_id, player_id)
+        if existing is not None and existing.status not in INACTIVE_STATUSES:
             raise ValueError("Player already has a booking for this game.")
 
         status = await self._claim_slot(game)
 
-        booking = Booking(game_id=game_id, player_id=player_id, status=status)
-        db.add(booking)
+        if existing is not None:
+            existing.status = status
+            booking = existing
+        else:
+            booking = Booking(game_id=game_id, player_id=player_id, status=status)
+            db.add(booking)
+
         await db.commit()
         await db.refresh(booking)
         await db.refresh(game)

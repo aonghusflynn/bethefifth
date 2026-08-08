@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/theme.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/games_provider.dart';
 import '../../providers/user_provider.dart';
 
@@ -18,6 +19,7 @@ class GamesListScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
+      drawer: const _OrganiserDrawer(),
       appBar: AppBar(
         title: Text(
           'BeTheFifth',
@@ -295,6 +297,78 @@ class GamesListScreen extends ConsumerWidget {
           color: color,
           fontWeight: FontWeight.bold,
           fontSize: 9,
+        ),
+      ),
+    );
+  }
+}
+
+/// Entry point to the organiser tools. Kept in a drawer so the games list
+/// stays focused on discovery, which is what most players open the app for.
+class _OrganiserDrawer extends StatelessWidget {
+  const _OrganiserDrawer();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    return Drawer(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      child: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(BtfSpace.x5),
+              child: Row(
+                children: [
+                  const Icon(Icons.sports_soccer,
+                      color: BtfColors.lime, size: 28),
+                  const SizedBox(width: BtfSpace.x3),
+                  Text(
+                    l10n.organiserTools,
+                    style: theme.textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(height: 1),
+            ListTile(
+              leading: const Icon(Icons.groups_outlined),
+              title: Text(l10n.mySquads),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/organiser/squads');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.repeat),
+              title: Text(l10n.recurringGames),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/organiser/series');
+              },
+            ),
+            const Divider(height: 1),
+            ListTile(
+              leading: const Icon(Icons.add_circle_outline),
+              title: Text(l10n.createGame),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/organiser/create-game');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person_outline),
+              title: Text(l10n.profile),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.push('/profile');
+              },
+            ),
+          ],
         ),
       ),
     );
